@@ -123,11 +123,19 @@
     }
     .hero-float{
       position:absolute;left:24px;right:24px;bottom:24px;
-      background:rgba(255,255,255,.88);backdrop-filter:blur(14px);
+      background:rgba(255,255,255,.90);backdrop-filter:blur(14px);
       border:1px solid rgba(255,255,255,.96);border-radius:22px;padding:18px;
-      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;box-shadow:0 18px 42px rgba(2,132,199,.16)
+      box-shadow:0 18px 42px rgba(2,132,199,.16)
     }
-    .hero-metric b{font-size:24px;display:block;line-height:1}.hero-metric span{font-size:12px;color:var(--muted)}
+    .automation-stack{display:grid;gap:12px}
+    .stack-title{font-size:13px;font-weight:950;color:#0b5f8f;letter-spacing:.08em;text-transform:uppercase}
+    .stack-grid{display:flex;flex-wrap:wrap;gap:8px}
+    .stack-grid span{
+      padding:7px 10px;border-radius:999px;
+      background:linear-gradient(135deg,#e0f7ff,#ffffff);
+      border:1px solid rgba(14,165,233,.18);
+      color:#244962;font-size:12px;font-weight:850;
+    }
     section{padding:64px 0}
     .section-head{
       display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:28px
@@ -232,6 +240,53 @@
       .hero-screen:after{display:none}
       h1{letter-spacing:-1.5px}
     }
+  
+    /* v6 screenshot fix */
+    .gallery{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .shot{
+      border-radius:24px;
+      overflow:hidden;
+      border:1px solid rgba(14,165,233,.16);
+      background:#ffffff;
+      box-shadow:0 16px 36px rgba(2,132,199,.12);
+      min-height:280px;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:zoom-in;
+      transition:.18s ease;
+    }
+    .shot.big{grid-row:span 2;min-height:540px}
+    .shot:hover{transform:translateY(-3px);box-shadow:0 22px 48px rgba(2,132,199,.20)}
+    .shot img{
+      width:100%;
+      height:100%;
+      object-fit:contain !important;
+      object-position:center !important;
+      background:#ffffff;
+      padding:10px;
+    }
+    .shot:after{
+      content:"";position:absolute;left:0;right:0;bottom:0;height:32%;
+      background:linear-gradient(180deg,transparent,rgba(6,39,62,.38));opacity:.58;pointer-events:none;
+    }
+    .caption{
+      position:absolute;left:12px;bottom:12px;right:12px;z-index:2;
+      color:white;text-shadow:0 2px 10px rgba(0,0,0,.35);
+      background:rgba(2,42,72,.48);backdrop-filter:blur(10px);
+      padding:9px 11px;border-radius:16px;display:grid;gap:2px;
+    }
+    .caption b{font-size:12px;line-height:1.15}
+    .caption small{font-size:11px;line-height:1.25;font-weight:650;color:rgba(255,255,255,.88)}
+    .automation-stack{display:grid;gap:12px}
+    .stack-title{font-size:13px;font-weight:950;color:#0b5f8f;letter-spacing:.08em;text-transform:uppercase}
+    .stack-grid{display:flex;flex-wrap:wrap;gap:8px}
+    .stack-grid span{
+      padding:7px 10px;border-radius:999px;background:linear-gradient(135deg,#e0f7ff,#ffffff);
+      border:1px solid rgba(14,165,233,.18);color:#244962;font-size:12px;font-weight:850;
+    }
+
   </style>
 </head>
 <body>
@@ -255,7 +310,7 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <div class="badge">⚡ Business automation portfolio</div>
+          <div class="badge">⚙️ Apps Script · Sheets · PDF · CRM automation</div>
           <h1>Google Sheets, Excel, PDF & <span class="grad">business web apps</span></h1>
           <p class="lead">
             I build practical internal systems for businesses: Google Apps Script web apps, dashboards,
@@ -277,10 +332,16 @@
         <div class="hero-card">
           <div class="hero-screen">
             <img src="acts_01_login.jpg" alt="Business automation dashboard preview">
-            <div class="hero-float">
-              <div class="hero-metric"><b>4</b><span>portfolio systems</span></div>
-              <div class="hero-metric"><b>PDF</b><span>document workflows</span></div>
-              <div class="hero-metric"><b>Excel</b><span>report exports</span></div>
+            <div class="hero-float automation-stack">
+              <div class="stack-title">Automation stack</div>
+              <div class="stack-grid">
+                <span>Apps Script</span>
+                <span>Google Sheets</span>
+                <span>Excel reports</span>
+                <span>PDF workflows</span>
+                <span>CRM systems</span>
+                <span>Dashboards</span>
+              </div>
             </div>
           </div>
         </div>
