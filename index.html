@@ -137,7 +137,7 @@
     .project-jump{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
     .project-jump a{display:flex;align-items:center;gap:8px;padding:10px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.70);font-size:12px;font-weight:900;color:#355a73}
     .project-jump a:hover{background:#fff;color:#0277ad}
-    .project-jump span{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#dff6ff;color:#0277ad;font-size:10px}
+    .project-jump span{display:none}
 
     .projects{display:grid;gap:58px}
     .project{
@@ -145,8 +145,8 @@
       border:1px solid rgba(255,255,255,.98);box-shadow:var(--shadow);overflow:hidden;
     }
     .project:nth-child(even){background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(231,249,255,.76))}
-    .project-top{display:grid;grid-template-columns:auto minmax(0,1fr) 240px;gap:24px;align-items:start}
-    .project-number{width:66px;height:66px;border-radius:22px;display:grid;place-items:center;color:#fff;font-size:18px;font-weight:950;background:linear-gradient(135deg,#027cb9,#38c7f4);box-shadow:0 16px 34px rgba(2,132,199,.22)}
+    .project-top{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:24px;align-items:start}
+    .project-number{display:none}
     .project-heading h3{font-size:clamp(30px,4vw,48px);line-height:1.03;letter-spacing:-1.6px;margin:7px 0 13px}
     .project-intro{margin:0;max-width:900px;color:var(--muted);font-size:16px}
     .project-type{padding:15px 17px;border-radius:19px;background:#f2fbff;border:1px solid var(--line)}
@@ -170,7 +170,7 @@
     .gallery-actions{display:flex;align-items:center;gap:12px}
     .gallery-play{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);color:#d8f4ff;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:900;cursor:pointer}
     .gallery-play[aria-pressed="true"]{background:#0ea5e9;border-color:#0ea5e9;color:#fff}
-    .gallery-counter{font-size:11px;color:#83aabd;font-weight:800} .gallery-counter b{font-size:15px;color:#fff}
+    .gallery-counter{display:none}
     .browser{border-radius:20px;overflow:hidden;background:#eaf5fb;border:1px solid rgba(255,255,255,.11)}
     .browser-bar{height:44px;display:grid;grid-template-columns:90px 1fr 90px;align-items:center;padding:0 14px;background:#f8fcfe;border-bottom:1px solid #d8e7ef}
     .browser-dots{display:flex;gap:6px} .browser-dots i{width:9px;height:9px;border-radius:50%;background:#ff6b6b} .browser-dots i:nth-child(2){background:#f5bd4f} .browser-dots i:nth-child(3){background:#4ecb71}
@@ -181,13 +181,13 @@
     .gallery-stage.changing .gallery-main{opacity:.18;transform:scale(.992)}
     .gallery-nav{position:absolute;top:50%;z-index:4;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.76);background:rgba(5,25,41,.74);backdrop-filter:blur(10px);color:#fff;font-size:34px;line-height:1;cursor:pointer;display:grid;place-items:center;opacity:.84;transition:.2s}
     .gallery-nav:hover{opacity:1;transform:translateY(-50%) scale(1.06)} .gallery-nav.prev{left:16px} .gallery-nav.next{right:16px}
-    .gallery-caption{display:grid;grid-template-columns:50px 1fr;gap:13px;align-items:start;padding:17px 5px 10px;color:#d9f5ff}
-    .caption-index{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(56,199,244,.13);border:1px solid rgba(56,199,244,.21);color:#59d8ff;font-size:11px;font-weight:950}
+    .gallery-caption{display:grid;grid-template-columns:1fr;gap:0;align-items:start;padding:17px 5px 10px;color:#d9f5ff}
+    .caption-index{display:none}
     .gallery-caption h4{margin:0 0 3px;font-size:15px} .gallery-caption p{margin:0;color:#91b4c7;font-size:12px}
     .thumbs{display:flex;gap:10px;padding:8px 4px 3px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#1b5776 transparent}
     .thumb{position:relative;flex:0 0 150px;aspect-ratio:16/9;padding:0;border-radius:13px;overflow:hidden;border:2px solid transparent;background:#12344d;cursor:pointer;opacity:.62;transition:.2s}
     .thumb:hover{opacity:.9} .thumb.active{opacity:1;border-color:#38c7f4;box-shadow:0 0 0 3px rgba(56,199,244,.14)}
-    .thumb img{width:100%;height:100%;object-fit:cover} .thumb span{position:absolute;right:5px;bottom:5px;padding:3px 6px;border-radius:7px;background:rgba(5,25,41,.78);color:#fff;font-size:9px;font-weight:950}
+    .thumb img{width:100%;height:100%;object-fit:cover} .thumb span{display:none}
 
     .contact{
       padding:38px;border-radius:36px;background:
@@ -196,13 +196,13 @@
       color:#e9faff;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;
     }
     .contact .eyebrow{color:#5ee0ff} .contact h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02;letter-spacing:-2px;margin:8px 0 12px} .contact p{margin:0;color:#a6c5d6;max-width:760px}
-    .contact-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end} .contact .btn{box-shadow:none} .contact .btn.secondary{color:#dff8ff;border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.08)}
+    .contact-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end} .contact .btn{box-shadow:none;white-space:normal;text-align:center} .contact .btn svg{flex:0 0 auto} .contact .btn.secondary{color:#dff8ff;border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.08)}
     footer{padding:34px 0 54px;color:#6b8092;font-size:13px} .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px}
 
     .lightbox{position:fixed;inset:0;z-index:1000;display:none;grid-template-rows:auto 1fr auto;padding:18px;background:rgba(2,12,23,.94);backdrop-filter:blur(12px);color:#fff}
     .lightbox.open{display:grid}
     .lightbox-top{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:0 2px 12px}
-    .lightbox-top strong{font-size:14px} .lightbox-count{font-size:12px;color:#93b7ca}
+    .lightbox-top strong{font-size:14px} .lightbox-count{display:none}
     .lightbox-close{width:44px;height:44px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:27px;cursor:pointer}
     .lightbox-stage{position:relative;min-height:0;display:grid;place-items:center}
     .lightbox-image{max-width:96vw;max-height:78vh;object-fit:contain;border-radius:14px;background:#fff;box-shadow:0 28px 90px rgba(0,0,0,.45)}
@@ -216,8 +216,8 @@
       .hero-grid{grid-template-columns:1fr}
       .hero-panel{max-width:760px;transform:none}
       .services{grid-template-columns:repeat(2,1fr)}
-      .project-top{grid-template-columns:auto 1fr}
-      .project-type{grid-column:2}
+      .project-top{grid-template-columns:minmax(0,1fr) 220px}
+      .project-type{grid-column:auto}
       .contact{grid-template-columns:1fr}
       .contact-actions{justify-content:flex-start}
     }
@@ -231,14 +231,14 @@
       section{padding:48px 0}
       .section-head{display:block} .section-head>p{margin-top:14px}
       .project{padding:20px;border-radius:28px}
-      .project-top{grid-template-columns:1fr} .project-number{width:54px;height:54px} .project-type{grid-column:auto}
+      .project-top{grid-template-columns:1fr} .project-type{grid-column:auto}
       .project-brief,.feature-grid{grid-template-columns:1fr}
       .gallery{padding:10px;border-radius:22px}
       .gallery-toolbar{align-items:flex-start} .gallery-toolbar strong{display:none}
       .browser-bar{grid-template-columns:55px 1fr 40px;padding:0 8px}
       .browser-address{width:100%}
       .gallery-nav{width:40px;height:40px;font-size:28px} .gallery-nav.prev{left:8px} .gallery-nav.next{right:8px}
-      .gallery-caption{grid-template-columns:40px 1fr}
+      .gallery-caption{grid-template-columns:1fr}
       .thumb{flex-basis:112px}
       .contact{padding:26px}
       .lightbox{padding:10px} .lightbox-nav{width:42px;height:42px} .lightbox-nav.prev{left:0} .lightbox-nav.next{right:0}
@@ -379,7 +379,7 @@
           </div>
           <div class="gallery-stage">
             <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
-            <img class="gallery-main" src="assets/acts_01_login.webp" alt="Secure role-based login">
+            <img class="gallery-main" src="acts_01_login.webp" alt="Secure role-based login">
             <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
           </div>
         </div>
@@ -391,51 +391,51 @@
           </div>
         </div>
         <div class="thumbs"><button class="thumb active" type="button"
-              data-src="assets/acts_01_login.webp" data-title="Secure role-based login" data-description="Department selection and protected access to the operational system."
+              data-src="acts_01_login.webp" data-title="Secure role-based login" data-description="Department selection and protected access to the operational system."
               aria-label="Show screenshot 1: Secure role-based login">
-              <img src="assets/acts_01_login.webp" alt="" loading="lazy">
+              <img src="acts_01_login.webp" alt="" loading="lazy">
               <span>01</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/acts_02_registry.webp" data-title="Act registry and status control" data-description="Central register with search, filters, status badges, counters and quick actions."
+              data-src="acts_02_registry.webp" data-title="Act registry and status control" data-description="Central register with search, filters, status badges, counters and quick actions."
               aria-label="Show screenshot 2: Act registry and status control">
-              <img src="assets/acts_02_registry.webp" alt="" loading="lazy">
+              <img src="acts_02_registry.webp" alt="" loading="lazy">
               <span>02</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/acts_03_details.webp" data-title="Detailed act card" data-description="Complete incident information, product data, responsibility fields and approval actions."
+              data-src="acts_03_details.webp" data-title="Detailed act card" data-description="Complete incident information, product data, responsibility fields and approval actions."
               aria-label="Show screenshot 3: Detailed act card">
-              <img src="assets/acts_03_details.webp" alt="" loading="lazy">
+              <img src="acts_03_details.webp" alt="" loading="lazy">
               <span>03</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/acts_04_history.webp" data-title="Document history timeline" data-description="A chronological audit trail from creation through departmental approvals and closure."
+              data-src="acts_04_history.webp" data-title="Document history timeline" data-description="A chronological audit trail from creation through departmental approvals and closure."
               aria-label="Show screenshot 4: Document history timeline">
-              <img src="assets/acts_04_history.webp" alt="" loading="lazy">
+              <img src="acts_04_history.webp" alt="" loading="lazy">
               <span>04</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/acts_05_create_basic.webp" data-title="Create act — general information" data-description="Basic act data with a live PDF preview that updates during data entry."
+              data-src="acts_05_create_basic.webp" data-title="Create act — general information" data-description="Basic act data with a live PDF preview that updates during data entry."
               aria-label="Show screenshot 5: Create act — general information">
-              <img src="assets/acts_05_create_basic.webp" alt="" loading="lazy">
+              <img src="acts_05_create_basic.webp" alt="" loading="lazy">
               <span>05</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/acts_06_create_products.webp" data-title="Create act — products and templates" data-description="Multiple product lines, quantities, reasons and reusable text templates."
+              data-src="acts_06_create_products.webp" data-title="Create act — products and templates" data-description="Multiple product lines, quantities, reasons and reusable text templates."
               aria-label="Show screenshot 6: Create act — products and templates">
-              <img src="assets/acts_06_create_products.webp" alt="" loading="lazy">
+              <img src="acts_06_create_products.webp" alt="" loading="lazy">
               <span>06</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/acts_07_attachments.webp" data-title="Photo and file attachments" data-description="Dedicated upload areas for vehicle, seal and non-conformity evidence."
+              data-src="acts_07_attachments.webp" data-title="Photo and file attachments" data-description="Dedicated upload areas for vehicle, seal and non-conformity evidence."
               aria-label="Show screenshot 7: Photo and file attachments">
-              <img src="assets/acts_07_attachments.webp" alt="" loading="lazy">
+              <img src="acts_07_attachments.webp" alt="" loading="lazy">
               <span>07</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/acts_08_excel.webp" data-title="Excel reporting export" data-description="A structured registry export for analysis, archiving and management reporting."
+              data-src="acts_08_excel.webp" data-title="Excel reporting export" data-description="A structured registry export for analysis, archiving and management reporting."
               aria-label="Show screenshot 8: Excel reporting export">
-              <img src="assets/acts_08_excel.webp" alt="" loading="lazy">
+              <img src="acts_08_excel.webp" alt="" loading="lazy">
               <span>08</span>
             </button></div>
       </section>
@@ -501,7 +501,7 @@
           </div>
           <div class="gallery-stage">
             <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
-            <img class="gallery-main" src="assets/vercon_01_login.webp" alt="Branded login experience">
+            <img class="gallery-main" src="vercon_01_login.webp" alt="Branded login experience">
             <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
           </div>
         </div>
@@ -513,63 +513,63 @@
           </div>
         </div>
         <div class="thumbs"><button class="thumb active" type="button"
-              data-src="assets/vercon_01_login.webp" data-title="Branded login experience" data-description="Secure sign-in with a clear summary of the platform&#x27;s main capabilities."
+              data-src="vercon_01_login.webp" data-title="Branded login experience" data-description="Secure sign-in with a clear summary of the platform&#x27;s main capabilities."
               aria-label="Show screenshot 1: Branded login experience">
-              <img src="assets/vercon_01_login.webp" alt="" loading="lazy">
+              <img src="vercon_01_login.webp" alt="" loading="lazy">
               <span>01</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_02_projects.webp" data-title="Projects dashboard" data-description="All projects displayed with budget, date, status and balance information."
+              data-src="vercon_02_projects.webp" data-title="Projects dashboard" data-description="All projects displayed with budget, date, status and balance information."
               aria-label="Show screenshot 2: Projects dashboard">
-              <img src="assets/vercon_02_projects.webp" alt="" loading="lazy">
+              <img src="vercon_02_projects.webp" alt="" loading="lazy">
               <span>02</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_03_add_project.webp" data-title="Create and edit projects" data-description="Project form for budget, dates, status, notes and visual identification."
+              data-src="vercon_03_add_project.webp" data-title="Create and edit projects" data-description="Project form for budget, dates, status, notes and visual identification."
               aria-label="Show screenshot 3: Create and edit projects">
-              <img src="assets/vercon_03_add_project.webp" alt="" loading="lazy">
+              <img src="vercon_03_add_project.webp" alt="" loading="lazy">
               <span>03</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_04_users.webp" data-title="User and role management" data-description="Administrator workspace for creating users and assigning system roles."
+              data-src="vercon_04_users.webp" data-title="User and role management" data-description="Administrator workspace for creating users and assigning system roles."
               aria-label="Show screenshot 4: User and role management">
-              <img src="assets/vercon_04_users.webp" alt="" loading="lazy">
+              <img src="vercon_04_users.webp" alt="" loading="lazy">
               <span>04</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_05_expenses.webp" data-title="Expense management module" data-description="Material and contractor expense entry with quantities, prices, vendors and payment status."
+              data-src="vercon_05_expenses.webp" data-title="Expense management module" data-description="Material and contractor expense entry with quantities, prices, vendors and payment status."
               aria-label="Show screenshot 5: Expense management module">
-              <img src="assets/vercon_05_expenses.webp" alt="" loading="lazy">
+              <img src="vercon_05_expenses.webp" alt="" loading="lazy">
               <span>05</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_06_estimate_form.webp" data-title="Estimate calculation form" data-description="Formula-driven inputs for planned quantity, material cost, labor cost and total budget."
+              data-src="vercon_06_estimate_form.webp" data-title="Estimate calculation form" data-description="Formula-driven inputs for planned quantity, material cost, labor cost and total budget."
               aria-label="Show screenshot 6: Estimate calculation form">
-              <img src="assets/vercon_06_estimate_form.webp" alt="" loading="lazy">
+              <img src="vercon_06_estimate_form.webp" alt="" loading="lazy">
               <span>06</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_07_estimate_table.webp" data-title="Detailed estimate table" data-description="Large structured estimate with sections, quantities, unit values, actuals and variance."
+              data-src="vercon_07_estimate_table.webp" data-title="Detailed estimate table" data-description="Large structured estimate with sections, quantities, unit values, actuals and variance."
               aria-label="Show screenshot 7: Detailed estimate table">
-              <img src="assets/vercon_07_estimate_table.webp" alt="" loading="lazy">
+              <img src="vercon_07_estimate_table.webp" alt="" loading="lazy">
               <span>07</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_08_cost_summary.webp" data-title="Cost summary and KPIs" data-description="Material, labor and overall totals with planned, actual, variance and completion indicators."
+              data-src="vercon_08_cost_summary.webp" data-title="Cost summary and KPIs" data-description="Material, labor and overall totals with planned, actual, variance and completion indicators."
               aria-label="Show screenshot 8: Cost summary and KPIs">
-              <img src="assets/vercon_08_cost_summary.webp" alt="" loading="lazy">
+              <img src="vercon_08_cost_summary.webp" alt="" loading="lazy">
               <span>08</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_09_excel.webp" data-title="Excel workbook export" data-description="Multi-sheet workbook for offline review, financial control and document exchange."
+              data-src="vercon_09_excel.webp" data-title="Excel workbook export" data-description="Multi-sheet workbook for offline review, financial control and document exchange."
               aria-label="Show screenshot 9: Excel workbook export">
-              <img src="assets/vercon_09_excel.webp" alt="" loading="lazy">
+              <img src="vercon_09_excel.webp" alt="" loading="lazy">
               <span>09</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vercon_10_analytics.webp" data-title="Analytics dashboard" data-description="Visual breakdowns by category, completion, cost type and planned-versus-actual performance."
+              data-src="vercon_10_analytics.webp" data-title="Analytics dashboard" data-description="Visual breakdowns by category, completion, cost type and planned-versus-actual performance."
               aria-label="Show screenshot 10: Analytics dashboard">
-              <img src="assets/vercon_10_analytics.webp" alt="" loading="lazy">
+              <img src="vercon_10_analytics.webp" alt="" loading="lazy">
               <span>10</span>
             </button></div>
       </section>
@@ -635,7 +635,7 @@
           </div>
           <div class="gallery-stage">
             <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
-            <img class="gallery-main" src="assets/vet_01_dashboard.webp" alt="Clinic dashboard">
+            <img class="gallery-main" src="vet_01_dashboard.webp" alt="Clinic dashboard">
             <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
           </div>
         </div>
@@ -647,39 +647,39 @@
           </div>
         </div>
         <div class="thumbs"><button class="thumb active" type="button"
-              data-src="assets/vet_01_dashboard.webp" data-title="Clinic dashboard" data-description="Daily overview with quick actions, clinic metrics and featured patient information."
+              data-src="vet_01_dashboard.webp" data-title="Clinic dashboard" data-description="Daily overview with quick actions, clinic metrics and featured patient information."
               aria-label="Show screenshot 1: Clinic dashboard">
-              <img src="assets/vet_01_dashboard.webp" alt="" loading="lazy">
+              <img src="vet_01_dashboard.webp" alt="" loading="lazy">
               <span>01</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vet_02_patients.webp" data-title="Patient registry" data-description="Searchable pet database with species, breed, owner, visit date and status."
+              data-src="vet_02_patients.webp" data-title="Patient registry" data-description="Searchable pet database with species, breed, owner, visit date and status."
               aria-label="Show screenshot 2: Patient registry">
-              <img src="assets/vet_02_patients.webp" alt="" loading="lazy">
+              <img src="vet_02_patients.webp" alt="" loading="lazy">
               <span>02</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vet_03_owners.webp" data-title="Pet owner management" data-description="Customer list with linked animals, contact details and account information."
+              data-src="vet_03_owners.webp" data-title="Pet owner management" data-description="Customer list with linked animals, contact details and account information."
               aria-label="Show screenshot 3: Pet owner management">
-              <img src="assets/vet_03_owners.webp" alt="" loading="lazy">
+              <img src="vet_03_owners.webp" alt="" loading="lazy">
               <span>03</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vet_04_appointments.webp" data-title="Appointment workflow board" data-description="Visual scheduling board for planned, confirmed, in-progress and completed visits."
+              data-src="vet_04_appointments.webp" data-title="Appointment workflow board" data-description="Visual scheduling board for planned, confirmed, in-progress and completed visits."
               aria-label="Show screenshot 4: Appointment workflow board">
-              <img src="assets/vet_04_appointments.webp" alt="" loading="lazy">
+              <img src="vet_04_appointments.webp" alt="" loading="lazy">
               <span>04</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vet_05_warehouse.webp" data-title="Warehouse and stock control" data-description="Medicine and supply inventory with quantities, categories, values and stock status."
+              data-src="vet_05_warehouse.webp" data-title="Warehouse and stock control" data-description="Medicine and supply inventory with quantities, categories, values and stock status."
               aria-label="Show screenshot 5: Warehouse and stock control">
-              <img src="assets/vet_05_warehouse.webp" alt="" loading="lazy">
+              <img src="vet_05_warehouse.webp" alt="" loading="lazy">
               <span>05</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/vet_06_reports.webp" data-title="Reports center" data-description="Operational, financial, inventory and appointment reports prepared for export."
+              data-src="vet_06_reports.webp" data-title="Reports center" data-description="Operational, financial, inventory and appointment reports prepared for export."
               aria-label="Show screenshot 6: Reports center">
-              <img src="assets/vet_06_reports.webp" alt="" loading="lazy">
+              <img src="vet_06_reports.webp" alt="" loading="lazy">
               <span>06</span>
             </button></div>
       </section>
@@ -745,7 +745,7 @@
           </div>
           <div class="gallery-stage">
             <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
-            <img class="gallery-main" src="assets/lab_01_dashboard.webp" alt="Samples dashboard">
+            <img class="gallery-main" src="lab_01_dashboard.webp" alt="Samples dashboard">
             <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
           </div>
         </div>
@@ -757,27 +757,27 @@
           </div>
         </div>
         <div class="thumbs"><button class="thumb active" type="button"
-              data-src="assets/lab_01_dashboard.webp" data-title="Samples dashboard" data-description="Counters, filters and a detailed register of products submitted for analysis."
+              data-src="lab_01_dashboard.webp" data-title="Samples dashboard" data-description="Counters, filters and a detailed register of products submitted for analysis."
               aria-label="Show screenshot 1: Samples dashboard">
-              <img src="assets/lab_01_dashboard.webp" alt="" loading="lazy">
+              <img src="lab_01_dashboard.webp" alt="" loading="lazy">
               <span>01</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/lab_02_files.webp" data-title="Files and sample photos" data-description="Attachment center for product images, analysis reports and related documents."
+              data-src="lab_02_files.webp" data-title="Files and sample photos" data-description="Attachment center for product images, analysis reports and related documents."
               aria-label="Show screenshot 2: Files and sample photos">
-              <img src="assets/lab_02_files.webp" alt="" loading="lazy">
+              <img src="lab_02_files.webp" alt="" loading="lazy">
               <span>02</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/lab_03_sample_form.webp" data-title="New sample form" data-description="Structured entry of product, manufacturer, production dates, quantity and laboratory."
+              data-src="lab_03_sample_form.webp" data-title="New sample form" data-description="Structured entry of product, manufacturer, production dates, quantity and laboratory."
               aria-label="Show screenshot 3: New sample form">
-              <img src="assets/lab_03_sample_form.webp" alt="" loading="lazy">
+              <img src="lab_03_sample_form.webp" alt="" loading="lazy">
               <span>03</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/lab_04_uploaded_files.webp" data-title="Sample form with uploaded evidence" data-description="Preview of attached product photos, request documents and laboratory files."
+              data-src="lab_04_uploaded_files.webp" data-title="Sample form with uploaded evidence" data-description="Preview of attached product photos, request documents and laboratory files."
               aria-label="Show screenshot 4: Sample form with uploaded evidence">
-              <img src="assets/lab_04_uploaded_files.webp" alt="" loading="lazy">
+              <img src="lab_04_uploaded_files.webp" alt="" loading="lazy">
               <span>04</span>
             </button></div>
       </section>
@@ -843,7 +843,7 @@
           </div>
           <div class="gallery-stage">
             <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
-            <img class="gallery-main" src="assets/crm_01_dashboard.webp" alt="Sales performance dashboard">
+            <img class="gallery-main" src="crm_01_dashboard.webp" alt="Sales performance dashboard">
             <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
           </div>
         </div>
@@ -855,33 +855,33 @@
           </div>
         </div>
         <div class="thumbs"><button class="thumb active" type="button"
-              data-src="assets/crm_01_dashboard.webp" data-title="Sales performance dashboard" data-description="Revenue trends, funnel metrics, lead activity and upcoming tasks."
+              data-src="crm_01_dashboard.webp" data-title="Sales performance dashboard" data-description="Revenue trends, funnel metrics, lead activity and upcoming tasks."
               aria-label="Show screenshot 1: Sales performance dashboard">
-              <img src="assets/crm_01_dashboard.webp" alt="" loading="lazy">
+              <img src="crm_01_dashboard.webp" alt="" loading="lazy">
               <span>01</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/crm_02_leads.webp" data-title="Lead management workspace" data-description="Lead list with sources, statuses, owners, values and follow-up actions."
+              data-src="crm_02_leads.webp" data-title="Lead management workspace" data-description="Lead list with sources, statuses, owners, values and follow-up actions."
               aria-label="Show screenshot 2: Lead management workspace">
-              <img src="assets/crm_02_leads.webp" alt="" loading="lazy">
+              <img src="crm_02_leads.webp" alt="" loading="lazy">
               <span>02</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/crm_03_pipeline.webp" data-title="Kanban deal pipeline" data-description="Deals grouped by sales stage with values, priorities and progress indicators."
+              data-src="crm_03_pipeline.webp" data-title="Kanban deal pipeline" data-description="Deals grouped by sales stage with values, priorities and progress indicators."
               aria-label="Show screenshot 3: Kanban deal pipeline">
-              <img src="assets/crm_03_pipeline.webp" alt="" loading="lazy">
+              <img src="crm_03_pipeline.webp" alt="" loading="lazy">
               <span>03</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/crm_04_clients.webp" data-title="Client database and profiles" data-description="Customer records with contacts, active deals, history and segmentation."
+              data-src="crm_04_clients.webp" data-title="Client database and profiles" data-description="Customer records with contacts, active deals, history and segmentation."
               aria-label="Show screenshot 4: Client database and profiles">
-              <img src="assets/crm_04_clients.webp" alt="" loading="lazy">
+              <img src="crm_04_clients.webp" alt="" loading="lazy">
               <span>04</span>
             </button>
 <button class="thumb" type="button"
-              data-src="assets/crm_05_tasks.webp" data-title="Tasks and follow-up planner" data-description="Calls, meetings, emails, deadlines, reminders and overdue work in one screen."
+              data-src="crm_05_tasks.webp" data-title="Tasks and follow-up planner" data-description="Calls, meetings, emails, deadlines, reminders and overdue work in one screen."
               aria-label="Show screenshot 5: Tasks and follow-up planner">
-              <img src="assets/crm_05_tasks.webp" alt="" loading="lazy">
+              <img src="crm_05_tasks.webp" alt="" loading="lazy">
               <span>05</span>
             </button></div>
       </section>
@@ -899,8 +899,14 @@
             <p>I can help with Google Apps Script, Google Sheets, Excel, PDF generation, internal dashboards, CRM workflows and business web applications.</p>
           </div>
           <div class="contact-actions">
-            <a class="btn primary" href="mailto:sheetflow.automation@gmail.com">Email me</a>
-            <a class="btn secondary" href="https://t.me/SheetFlowAutomation" target="_blank" rel="noopener">@SheetFlowAutomation</a>
+            <a class="btn primary" href="mailto:sheetflow.automation@gmail.com" aria-label="Email SheetFlow Automation">
+              <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg>
+              sheetflow.automation@gmail.com
+            </a>
+            <a class="btn secondary" href="https://t.me/SheetFlowAutomation" target="_blank" rel="noopener" aria-label="Open SheetFlow Automation on Telegram">
+              <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M9.78 15.59 9.4 20.9c.54 0 .78-.23 1.06-.51l2.55-2.44 5.29 3.87c.97.54 1.65.26 1.91-.89l3.46-16.22h.01c.31-1.43-.52-1.99-1.46-1.64L1.9 10.84C.51 11.38.53 12.16 1.66 12.5l5.56 1.73L20.13 6.15c.61-.4 1.16-.18.71.23L9.78 15.59Z"/></svg>
+              @SheetFlowAutomation
+            </a>
           </div>
         </div>
       </div>
