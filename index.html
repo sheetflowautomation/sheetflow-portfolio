@@ -4,19 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SheetFlow Automation | Business Automation Portfolio</title>
-  <meta name="description" content="Google Apps Script, Google Sheets, Excel, PDF, CRM, dashboards and Android/Kotlin business automation portfolio.">
+  <meta name="description" content="Portfolio of Google Apps Script, Google Sheets, Excel, PDF, CRM, dashboards and business web applications.">
+  <meta name="theme-color" content="#061a2d">
   <style>
     :root {
-      --bg:#eefdff;
-      --bg2:#d9f6ff;
+      --navy:#061a2d;
+      --navy-2:#0b2943;
+      --ink:#102a43;
+      --muted:#60758a;
       --sky:#0ea5e9;
-      --sky2:#38c7f4;
-      --ink:#09233d;
-      --muted:#5c7288;
-      --card:rgba(255,255,255,.86);
+      --cyan:#38c7f4;
+      --ice:#eafaff;
+      --paper:#ffffff;
       --line:rgba(14,165,233,.18);
-      --shadow:0 24px 70px rgba(2,132,199,.15);
-      --radius:28px;
+      --shadow:0 26px 80px rgba(3,55,88,.14);
+      --radius:30px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -25,256 +27,270 @@
       font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
       color:var(--ink);
       background:
-        radial-gradient(circle at 12% 8%, rgba(56,199,244,.38), transparent 32%),
-        radial-gradient(circle at 86% 0%, rgba(125,220,255,.42), transparent 38%),
-        linear-gradient(180deg,#f5fdff 0%,#eefdff 45%,#f8fdff 100%);
-      line-height:1.6;
+        radial-gradient(circle at 7% 2%,rgba(56,199,244,.24),transparent 28rem),
+        radial-gradient(circle at 94% 10%,rgba(14,165,233,.18),transparent 34rem),
+        linear-gradient(180deg,#f7fdff 0%,#ecfaff 42%,#f8fdff 100%);
+      line-height:1.55;
       overflow-x:hidden;
     }
-    body:before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background-image:linear-gradient(120deg,rgba(14,165,233,.08) 0 1px,transparent 1px);
-      background-size:110px 110px;
-      mask-image:linear-gradient(to bottom,black,transparent 70%);
+    body::before{
+      content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.45;
+      background-image:linear-gradient(rgba(14,165,233,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,.08) 1px,transparent 1px);
+      background-size:72px 72px;
+      mask-image:linear-gradient(to bottom,black,transparent 78%);
     }
-    a{color:inherit;text-decoration:none}
     img{display:block;max-width:100%}
-    .wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .wrap{width:min(1320px,calc(100% - 44px));margin-inline:auto}
+
     .nav{
-      position:sticky;top:0;z-index:50;
-      background:rgba(245,253,255,.76);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid var(--line);
+      position:sticky;top:0;z-index:100;
+      background:rgba(247,253,255,.78);
+      backdrop-filter:blur(20px) saturate(160%);
+      border-bottom:1px solid rgba(14,165,233,.14);
     }
-    .nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:-.2px}
+    .nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:-.4px}
     .logo{
-      width:44px;height:44px;border-radius:16px;
-      display:grid;place-items:center;
-      color:white;font-weight:950;
-      background:linear-gradient(135deg,var(--sky),var(--sky2));
-      box-shadow:0 14px 34px rgba(14,165,233,.28);
+      width:45px;height:45px;border-radius:16px;display:grid;place-items:center;color:#fff;
+      background:linear-gradient(135deg,#0284c7,#38c7f4);
+      box-shadow:0 13px 32px rgba(2,132,199,.30);
     }
-    .nav-links{display:flex;gap:22px;align-items:center;color:#4b6a84;font-size:14px;font-weight:800}
-    .nav-links a:hover{color:#0277ad}
+    .nav-links{display:flex;align-items:center;gap:24px;color:#47657c;font-size:14px;font-weight:800}
+    .nav-links a:hover{color:#0284c7}
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:9px;
-      padding:13px 19px;border-radius:999px;border:1px solid var(--line);
-      background:rgba(255,255,255,.78);
-      color:var(--ink);font-weight:900;font-size:14px;
-      box-shadow:0 12px 28px rgba(2,132,199,.09);
-      cursor:pointer;
+      min-height:48px;padding:0 20px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(255,255,255,.85);font-weight:900;font-size:14px;cursor:pointer;
+      box-shadow:0 12px 28px rgba(2,132,199,.09);transition:.2s ease;
     }
-    .btn.primary{border:0;color:white;background:linear-gradient(135deg,#0284c7,#38c7f4)}
-    .btn.telegram{color:#0277ad;background:rgba(255,255,255,.84)}
-    .btn.telegram svg{width:18px;height:18px}
-    .hero{padding:90px 0 54px}
-    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:9px 13px;border-radius:999px;background:rgba(14,165,233,.10);
-      color:#0277ad;border:1px solid rgba(14,165,233,.18);
-      font-weight:950;font-size:13px;margin-bottom:22px;
-    }
-    h1{
-      margin:0 0 22px;
-      font-size:clamp(42px,6.3vw,76px);
-      line-height:.98;
-      letter-spacing:-2.5px;
-    }
-    .grad{background:linear-gradient(135deg,#0284c7,#38c7f4);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .lead{font-size:19px;color:var(--muted);max-width:720px;margin:0 0 30px}
-    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:26px}
-    .chips{display:flex;gap:10px;flex-wrap:wrap}
-    .chip{
-      padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.76);
-      border:1px solid var(--line);font-size:13px;font-weight:850;color:#355873;
-    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(2,132,199,.16)}
+    .btn.primary{border:0;color:#fff;background:linear-gradient(135deg,#027cb9,#38c7f4)}
 
-    .automation-panel{
-      border-radius:38px;padding:22px;
-      background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(218,247,255,.80));
-      border:1px solid rgba(255,255,255,.95);
-      box-shadow:var(--shadow);
-    }
-    .diagram{
-      border-radius:30px;padding:28px;min-height:520px;
-      background:
-        radial-gradient(circle at 12% 10%,rgba(56,199,244,.22),transparent 34%),
-        linear-gradient(180deg,#fff,#eefbff);
-      border:1px solid var(--line);
-      display:grid;
-      gap:20px;
-      align-content:space-between;
-    }
-    .diagram-badge{
-      width:max-content;padding:8px 12px;border-radius:999px;
-      background:rgba(14,165,233,.10);border:1px solid rgba(14,165,233,.18);
+    .hero{padding:96px 0 58px}
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:54px;align-items:center}
+    .kicker{
+      display:inline-flex;align-items:center;gap:9px;padding:9px 14px;margin-bottom:24px;
+      border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.65);
       color:#0277ad;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;
     }
-    .diagram h2{font-size:34px;line-height:1.05;margin:14px 0 8px;letter-spacing:-.8px}
-    .diagram p{margin:0;color:var(--muted)}
-    .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch}
-    .flow.bottom{grid-template-columns:repeat(3,1fr)}
-    .flow-card{
-      min-height:124px;border-radius:22px;padding:18px;background:rgba(255,255,255,.84);
-      border:1px solid var(--line);box-shadow:0 16px 34px rgba(2,132,199,.10);
-      display:grid;gap:4px;
+    .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 5px rgba(34,197,94,.13)}
+    h1{
+      margin:0 0 24px;font-size:clamp(48px,6vw,84px);line-height:.96;letter-spacing:-3.6px;
+      max-width:900px;
     }
-    .flow-icon{width:42px;height:42px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#e0f7ff,#fff);font-size:22px;margin-bottom:6px}
-    .flow-card b{font-size:16px} .flow-card small{font-size:12px;color:var(--muted);font-weight:800}
-    .arrow{display:grid;place-items:center;font-size:24px;color:#0284c7;font-weight:950}
-    .code{
-      border-radius:20px;padding:16px 18px;background:#082033;color:#dff7ff;
-      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;
-      box-shadow:0 18px 42px rgba(8,32,51,.16);
+    .gradient{background:linear-gradient(135deg,#027cb9,#38c7f4);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{font-size:19px;color:var(--muted);max-width:760px;margin:0 0 30px}
+    .hero-actions{display:flex;gap:13px;flex-wrap:wrap;margin-bottom:34px}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:720px}
+    .stat{
+      padding:17px 18px;border:1px solid rgba(14,165,233,.15);border-radius:20px;
+      background:rgba(255,255,255,.68);box-shadow:0 16px 40px rgba(2,132,199,.08)
     }
-    .code span{color:#38c7f4}
-    section{padding:64px 0}
-    .section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:28px}
-    .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:950;color:#0277ad}
-    h2.section-title{font-size:clamp(30px,4vw,50px);line-height:1.05;letter-spacing:-1.3px;margin:8px 0 0}
-    .section-head p{max-width:570px;color:var(--muted);margin:0}
+    .stat strong{display:block;font-size:25px;letter-spacing:-.8px;color:#063d5c}
+    .stat span{font-size:12px;font-weight:800;color:var(--muted)}
+
+    .hero-panel{
+      border-radius:38px;padding:20px;background:rgba(255,255,255,.72);
+      border:1px solid rgba(255,255,255,.96);box-shadow:var(--shadow);transform:rotate(1deg);
+    }
+    .panel-inner{
+      min-height:540px;border-radius:30px;padding:30px;color:#dff8ff;position:relative;overflow:hidden;
+      background:
+        radial-gradient(circle at 80% 10%,rgba(56,199,244,.36),transparent 34%),
+        radial-gradient(circle at 8% 85%,rgba(14,165,233,.22),transparent 30%),
+        linear-gradient(145deg,#061a2d,#0b3554 58%,#075a7b);
+    }
+    .panel-inner::after{
+      content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+      background-size:36px 36px;mask-image:linear-gradient(to bottom,black,transparent);
+    }
+    .panel-content{position:relative;z-index:1}
+    .panel-badge{display:inline-block;padding:8px 11px;border-radius:999px;background:rgba(56,199,244,.13);border:1px solid rgba(56,199,244,.28);font-size:11px;font-weight:950;letter-spacing:.12em;text-transform:uppercase}
+    .panel-inner h2{font-size:38px;line-height:1.04;margin:18px 0 10px;letter-spacing:-1.2px}
+    .panel-inner p{margin:0;color:#a9c8d8}
+    .workflow{display:grid;gap:12px;margin-top:34px}
+    .workflow-row{display:grid;grid-template-columns:44px 1fr auto;gap:13px;align-items:center;padding:14px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.07);border-radius:18px}
+    .workflow-icon{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(56,199,244,.26),rgba(255,255,255,.08));font-size:21px}
+    .workflow-row b{display:block;font-size:14px} .workflow-row small{color:#96b9cb;font-size:11px}
+    .workflow-row em{font-style:normal;color:#5ee0ff;font-size:19px}
+    .code-block{margin-top:18px;padding:17px 18px;border-radius:18px;background:rgba(2,12,23,.48);border:1px solid rgba(255,255,255,.08);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:#b8d7e6}
+    .code-block span{color:#5ee0ff}
+
+    section{padding:66px 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:30px}
+    .eyebrow{font-size:11px;font-weight:950;letter-spacing:.15em;text-transform:uppercase;color:#0284c7}
+    .section-title{font-size:clamp(34px,4.5vw,58px);line-height:1.02;letter-spacing:-2px;margin:9px 0 0}
+    .section-head>p{max-width:620px;margin:0;color:var(--muted)}
+
     .services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
     .service{
-      border-radius:var(--radius);padding:22px;background:var(--card);
-      border:1px solid rgba(255,255,255,.90);box-shadow:0 18px 52px rgba(2,132,199,.10);
+      min-height:220px;padding:24px;border-radius:26px;border:1px solid rgba(255,255,255,.95);
+      background:rgba(255,255,255,.74);box-shadow:0 18px 48px rgba(2,132,199,.09);
+      transition:.2s ease;
     }
-    .service .icon{width:48px;height:48px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#e0f7ff,#fff);font-size:23px;margin-bottom:16px}
+    .service:hover{transform:translateY(-4px);box-shadow:0 24px 56px rgba(2,132,199,.14)}
+    .service-icon{width:50px;height:50px;border-radius:17px;display:grid;place-items:center;margin-bottom:18px;background:linear-gradient(135deg,#dff7ff,#fff);font-size:23px;box-shadow:inset 0 0 0 1px var(--line)}
     .service h3{margin:0 0 9px;font-size:18px} .service p{margin:0;color:var(--muted);font-size:14px}
-    .projects{display:grid;gap:44px}
-    .project-card{
-      border-radius:38px;padding:28px;background:rgba(255,255,255,.80);
-      border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow);
-      display:grid;grid-template-columns:.35fr .65fr;gap:28px;align-items:start;
+
+    .project-jump{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+    .project-jump a{display:flex;align-items:center;gap:8px;padding:10px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.70);font-size:12px;font-weight:900;color:#355a73}
+    .project-jump a:hover{background:#fff;color:#0277ad}
+    .project-jump span{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#dff6ff;color:#0277ad;font-size:10px}
+
+    .projects{display:grid;gap:58px}
+    .project{
+      scroll-margin-top:96px;padding:34px;border-radius:38px;background:rgba(255,255,255,.80);
+      border:1px solid rgba(255,255,255,.98);box-shadow:var(--shadow);overflow:hidden;
     }
-    .project-copy{position:sticky;top:100px}
-    .project-copy h3{font-size:30px;line-height:1.08;letter-spacing:-.6px;margin:8px 0 13px}
-    .project-copy p{color:var(--muted);margin:0 0 18px}
-    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-    .tag{font-size:12px;font-weight:850;padding:7px 10px;border-radius:999px;border:1px solid rgba(14,165,233,.18);background:#f4fcff;color:#24627e}
-    .features{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:9px}
-    .features li{font-size:14px;color:#244962} .features li:before{content:"✓";color:#0284c7;font-weight:950;margin-right:8px}
-    .shots-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-    .shot{
-      border:0;padding:0;text-align:left;font:inherit;color:inherit;
-      border-radius:24px;overflow:hidden;background:#fff;
-      box-shadow:0 16px 36px rgba(2,132,199,.12);
-      border:1px solid rgba(14,165,233,.14);
-      min-height:290px;position:relative;display:flex;align-items:center;justify-content:center;
-      cursor:zoom-in;transition:.18s ease;
-    }
-    .shot:hover{transform:translateY(-3px);box-shadow:0 22px 48px rgba(2,132,199,.20)}
-    .shot img{width:100%;height:100%;object-fit:contain;background:#fff;padding:10px}
-    .shot:after{content:"";position:absolute;left:0;right:0;bottom:0;height:36%;background:linear-gradient(180deg,transparent,rgba(6,39,62,.42));pointer-events:none}
-    .shot-text{
-      position:absolute;left:12px;right:12px;bottom:12px;z-index:2;
-      background:rgba(2,42,72,.52);backdrop-filter:blur(10px);color:#fff;
-      border-radius:16px;padding:9px 11px;display:grid;gap:2px;text-shadow:0 2px 10px rgba(0,0,0,.35);
-    }
-    .shot-text b{font-size:12px;line-height:1.15} .shot-text small{font-size:11px;line-height:1.25;font-weight:650;color:rgba(255,255,255,.88)}
+    .project:nth-child(even){background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(231,249,255,.76))}
+    .project-top{display:grid;grid-template-columns:auto minmax(0,1fr) 240px;gap:24px;align-items:start}
+    .project-number{width:66px;height:66px;border-radius:22px;display:grid;place-items:center;color:#fff;font-size:18px;font-weight:950;background:linear-gradient(135deg,#027cb9,#38c7f4);box-shadow:0 16px 34px rgba(2,132,199,.22)}
+    .project-heading h3{font-size:clamp(30px,4vw,48px);line-height:1.03;letter-spacing:-1.6px;margin:7px 0 13px}
+    .project-intro{margin:0;max-width:900px;color:var(--muted);font-size:16px}
+    .project-type{padding:15px 17px;border-radius:19px;background:#f2fbff;border:1px solid var(--line)}
+    .project-type span{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7090a5;font-weight:950;margin-bottom:5px}
+    .project-type strong{font-size:12px;line-height:1.35;display:block;color:#1d536f}
+    .project-brief{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:26px}
+    .brief-card{padding:20px;border-radius:22px;background:linear-gradient(145deg,#f4fcff,#fff);border:1px solid var(--line)}
+    .brief-label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:950;color:#0284c7;margin-bottom:8px}
+    .brief-card p{margin:0;color:#3d6078;font-size:14px}
+    .tag-row{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+    .tag{padding:7px 10px;border-radius:999px;border:1px solid rgba(14,165,233,.17);background:#f3fbff;color:#2d637f;font-size:11px;font-weight:900}
+    .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-bottom:28px}
+    .feature-card{display:flex;gap:12px;padding:17px;border-radius:20px;background:rgba(247,253,255,.78);border:1px solid rgba(14,165,233,.13)}
+    .feature-check{flex:0 0 30px;width:30px;height:30px;border-radius:11px;display:grid;place-items:center;background:#dff7ff;color:#0284c7;font-weight:950}
+    .feature-card h4{margin:0 0 4px;font-size:14px} .feature-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+
+    .gallery{border-radius:28px;padding:17px;background:#071b2d;box-shadow:0 24px 58px rgba(5,25,41,.20)}
+    .gallery-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:4px 5px 16px;color:#d8f4ff}
+    .gallery-label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#59d8ff;font-weight:950;margin-bottom:3px}
+    .gallery-toolbar strong{font-size:12px}
+    .gallery-actions{display:flex;align-items:center;gap:12px}
+    .gallery-play{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);color:#d8f4ff;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:900;cursor:pointer}
+    .gallery-play[aria-pressed="true"]{background:#0ea5e9;border-color:#0ea5e9;color:#fff}
+    .gallery-counter{font-size:11px;color:#83aabd;font-weight:800} .gallery-counter b{font-size:15px;color:#fff}
+    .browser{border-radius:20px;overflow:hidden;background:#eaf5fb;border:1px solid rgba(255,255,255,.11)}
+    .browser-bar{height:44px;display:grid;grid-template-columns:90px 1fr 90px;align-items:center;padding:0 14px;background:#f8fcfe;border-bottom:1px solid #d8e7ef}
+    .browser-dots{display:flex;gap:6px} .browser-dots i{width:9px;height:9px;border-radius:50%;background:#ff6b6b} .browser-dots i:nth-child(2){background:#f5bd4f} .browser-dots i:nth-child(3){background:#4ecb71}
+    .browser-address{justify-self:center;width:min(460px,80%);height:26px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:#eaf3f7;color:#6c8799;font-size:10px;font-weight:800}
+    .open-full{justify-self:end;width:32px;height:32px;border:0;border-radius:10px;background:#e5f5fc;color:#0277ad;font-weight:950;cursor:pointer}
+    .gallery-stage{position:relative;aspect-ratio:16/9;background:#eaf3f7;display:grid;place-items:center;overflow:hidden;touch-action:pan-y}
+    .gallery-main{width:100%;height:100%;object-fit:contain;cursor:zoom-in;transition:opacity .18s ease,transform .25s ease}
+    .gallery-stage.changing .gallery-main{opacity:.18;transform:scale(.992)}
+    .gallery-nav{position:absolute;top:50%;z-index:4;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.76);background:rgba(5,25,41,.74);backdrop-filter:blur(10px);color:#fff;font-size:34px;line-height:1;cursor:pointer;display:grid;place-items:center;opacity:.84;transition:.2s}
+    .gallery-nav:hover{opacity:1;transform:translateY(-50%) scale(1.06)} .gallery-nav.prev{left:16px} .gallery-nav.next{right:16px}
+    .gallery-caption{display:grid;grid-template-columns:50px 1fr;gap:13px;align-items:start;padding:17px 5px 10px;color:#d9f5ff}
+    .caption-index{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(56,199,244,.13);border:1px solid rgba(56,199,244,.21);color:#59d8ff;font-size:11px;font-weight:950}
+    .gallery-caption h4{margin:0 0 3px;font-size:15px} .gallery-caption p{margin:0;color:#91b4c7;font-size:12px}
+    .thumbs{display:flex;gap:10px;padding:8px 4px 3px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#1b5776 transparent}
+    .thumb{position:relative;flex:0 0 150px;aspect-ratio:16/9;padding:0;border-radius:13px;overflow:hidden;border:2px solid transparent;background:#12344d;cursor:pointer;opacity:.62;transition:.2s}
+    .thumb:hover{opacity:.9} .thumb.active{opacity:1;border-color:#38c7f4;box-shadow:0 0 0 3px rgba(56,199,244,.14)}
+    .thumb img{width:100%;height:100%;object-fit:cover} .thumb span{position:absolute;right:5px;bottom:5px;padding:3px 6px;border-radius:7px;background:rgba(5,25,41,.78);color:#fff;font-size:9px;font-weight:950}
+
     .contact{
-      border-radius:36px;padding:34px;background:linear-gradient(135deg,rgba(14,165,233,.16),rgba(255,255,255,.86));
-      border:1px solid rgba(255,255,255,.96);box-shadow:var(--shadow);
-      display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;
+      padding:38px;border-radius:36px;background:
+        radial-gradient(circle at 88% 20%,rgba(56,199,244,.28),transparent 24rem),
+        linear-gradient(135deg,#071b2d,#0b3654);
+      color:#e9faff;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;
     }
-    .contact h2{margin:0 0 10px;font-size:clamp(28px,4vw,44px);line-height:1.05} .contact p{margin:0;color:var(--muted)}
-    .contact-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
-    footer{padding:36px 0 58px;color:var(--muted)} .footer-inner{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-    .lightbox{
-      position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;
-      padding:28px;background:rgba(5,18,32,.84);backdrop-filter:blur(8px);
-    }
-    .lightbox.open{display:flex}
-    .lightbox img{max-width:min(96vw,1500px);max-height:90vh;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 30px 90px rgba(0,0,0,.38)}
-    .lightbox-close{position:fixed;top:18px;right:18px;width:44px;height:44px;border:0;border-radius:999px;background:#fff;color:#0b1f38;font-size:28px;line-height:1;cursor:pointer;box-shadow:0 14px 34px rgba(0,0,0,.20)}
-    @media (max-width:980px){
+    .contact .eyebrow{color:#5ee0ff} .contact h2{font-size:clamp(34px,4.4vw,58px);line-height:1.02;letter-spacing:-2px;margin:8px 0 12px} .contact p{margin:0;color:#a6c5d6;max-width:760px}
+    .contact-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end} .contact .btn{box-shadow:none} .contact .btn.secondary{color:#dff8ff;border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.08)}
+    footer{padding:34px 0 54px;color:#6b8092;font-size:13px} .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px}
+
+    .lightbox{position:fixed;inset:0;z-index:1000;display:none;grid-template-rows:auto 1fr auto;padding:18px;background:rgba(2,12,23,.94);backdrop-filter:blur(12px);color:#fff}
+    .lightbox.open{display:grid}
+    .lightbox-top{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:0 2px 12px}
+    .lightbox-top strong{font-size:14px} .lightbox-count{font-size:12px;color:#93b7ca}
+    .lightbox-close{width:44px;height:44px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:27px;cursor:pointer}
+    .lightbox-stage{position:relative;min-height:0;display:grid;place-items:center}
+    .lightbox-image{max-width:96vw;max-height:78vh;object-fit:contain;border-radius:14px;background:#fff;box-shadow:0 28px 90px rgba(0,0,0,.45)}
+    .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#fff;font-size:34px;cursor:pointer} .lightbox-nav.prev{left:8px} .lightbox-nav.next{right:8px}
+    .lightbox-caption{text-align:center;padding:14px 20px 4px} .lightbox-caption h4{margin:0 0 4px;font-size:16px} .lightbox-caption p{margin:0;color:#9bbacc;font-size:12px}
+
+    .reveal{opacity:0;transform:translateY(22px);transition:.65s ease} .reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:1050px){
       .nav-links{display:none}
-      .hero-grid,.project-card,.contact{grid-template-columns:1fr}
-      .project-copy{position:static}
+      .hero-grid{grid-template-columns:1fr}
+      .hero-panel{max-width:760px;transform:none}
       .services{grid-template-columns:repeat(2,1fr)}
-      .flow,.flow.bottom{grid-template-columns:1fr}
-      .arrow{transform:rotate(90deg)}
-      .diagram{min-height:auto}
-    }
-    @media (max-width:640px){
-      .wrap{width:min(100% - 24px,1180px)}
-      .hero{padding:58px 0 34px}
-      h1{letter-spacing:-1.6px}
-      .services,.shots-grid{grid-template-columns:1fr}
-      .shot{min-height:320px}
-      .section-head{display:block}
+      .project-top{grid-template-columns:auto 1fr}
+      .project-type{grid-column:2}
+      .contact{grid-template-columns:1fr}
       .contact-actions{justify-content:flex-start}
+    }
+    @media(max-width:720px){
+      .wrap{width:min(100% - 24px,1320px)}
+      .nav-inner{height:68px} .nav .btn.primary{display:none}
+      .hero{padding:62px 0 36px} h1{letter-spacing:-2.2px}
+      .hero-stats{grid-template-columns:1fr}
+      .panel-inner{min-height:auto;padding:23px} .panel-inner h2{font-size:31px}
+      .services{grid-template-columns:1fr}
+      section{padding:48px 0}
+      .section-head{display:block} .section-head>p{margin-top:14px}
+      .project{padding:20px;border-radius:28px}
+      .project-top{grid-template-columns:1fr} .project-number{width:54px;height:54px} .project-type{grid-column:auto}
+      .project-brief,.feature-grid{grid-template-columns:1fr}
+      .gallery{padding:10px;border-radius:22px}
+      .gallery-toolbar{align-items:flex-start} .gallery-toolbar strong{display:none}
+      .browser-bar{grid-template-columns:55px 1fr 40px;padding:0 8px}
+      .browser-address{width:100%}
+      .gallery-nav{width:40px;height:40px;font-size:28px} .gallery-nav.prev{left:8px} .gallery-nav.next{right:8px}
+      .gallery-caption{grid-template-columns:40px 1fr}
+      .thumb{flex-basis:112px}
+      .contact{padding:26px}
+      .lightbox{padding:10px} .lightbox-nav{width:42px;height:42px} .lightbox-nav.prev{left:0} .lightbox-nav.next{right:0}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
     }
   </style>
 </head>
 <body>
   <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="#">
-        <span class="logo">SF</span>
-        <span>SheetFlow Automation</span>
-      </a>
+      <a class="brand" href="#top"><span class="logo">SF</span><span>SheetFlow Automation</span></a>
       <nav class="nav-links">
         <a href="#services">Services</a>
         <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a class="btn primary" href="#contact">Work with me</a>
+      <a class="btn primary" href="#contact">Discuss a project</a>
     </div>
   </header>
 
-  <main>
+  <main id="top">
     <section class="hero">
       <div class="wrap hero-grid">
-        <div>
-          <div class="badge">⚙️ Apps Script · Sheets · PDF · CRM automation</div>
-          <h1>Google Sheets, Excel, PDF & <span class="grad">business web apps</span></h1>
-          <p class="lead">I build practical internal systems for businesses: Google Apps Script web apps, dashboards, PDF documents, Excel exports, CRM workflows, tracking platforms, and Android/Kotlin mobile tools.</p>
+        <div class="reveal visible">
+          <div class="kicker">Business automation portfolio</div>
+          <h1>Internal systems that turn manual work into a <span class="gradient">clear digital workflow</span></h1>
+          <p class="lead">I build practical web applications and automation for business operations: Google Apps Script systems, spreadsheet workflows, PDF documents, Excel reports, dashboards, CRM tools and mobile data collection.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="#projects">View projects</a>
-            <a class="btn" href="#services">What I build</a>
+            <a class="btn primary" href="#projects">Explore projects</a>
+            <a class="btn" href="#contact">Contact me</a>
           </div>
-          <div class="chips">
-            <span class="chip">Google Apps Script</span>
-            <span class="chip">Google Sheets</span>
-            <span class="chip">Excel export</span>
-            <span class="chip">PDF generation</span>
-            <span class="chip">HTML / CSS / JS</span>
-            <span class="chip">Android / Kotlin</span>
+          <div class="hero-stats">
+            <div class="stat"><strong>5</strong><span>business systems showcased</span></div>
+            <div class="stat"><strong>33</strong><span>documented interface screens</span></div>
+            <div class="stat"><strong>1 workflow</strong><span>data → documents → reports</span></div>
           </div>
         </div>
-
-        <div class="automation-panel">
-          <div class="diagram">
-            <div>
-              <div class="diagram-badge">Google Workspace Automation</div>
-              <h2>Apps Script workflow</h2>
-              <p>Forms, Sheets, Drive, PDF and reports connected into one clean business system.</p>
-            </div>
-
-            <div class="flow">
-              <div class="flow-card"><span class="flow-icon">📝</span><b>Web Form</b><small>Data entry panel</small></div>
-              <div class="arrow">→</div>
-              <div class="flow-card"><span class="flow-icon">📊</span><b>Google Sheets</b><small>Database & logic</small></div>
-              <div class="arrow">→</div>
-              <div class="flow-card"><span class="flow-icon">📁</span><b>Drive Storage</b><small>Files & photos</small></div>
-            </div>
-
-            <div class="flow bottom">
-              <div class="flow-card"><span class="flow-icon">📄</span><b>PDF Documents</b><small>Auto-generated acts</small></div>
-              <div class="flow-card"><span class="flow-icon">📈</span><b>Excel Reports</b><small>Filtered exports</small></div>
-              <div class="flow-card"><span class="flow-icon">⚙️</span><b>CRM / Dashboard</b><small>Statuses & analytics</small></div>
-            </div>
-
-            <div class="code">
-              <div><span>function</span> createReport(data) {</div>
-              <div>&nbsp;&nbsp;Sheets → PDF → Drive → Email</div>
-              <div>}</div>
+        <div class="hero-panel reveal">
+          <div class="panel-inner">
+            <div class="panel-content">
+              <div class="panel-badge">Connected business workflow</div>
+              <h2>From data entry to management reporting</h2>
+              <p>Forms, spreadsheets, files, documents and analytics connected into one controlled process.</p>
+              <div class="workflow">
+                <div class="workflow-row"><span class="workflow-icon">📝</span><div><b>Web application</b><small>Forms, roles, validation and status workflows</small></div><em>→</em></div>
+                <div class="workflow-row"><span class="workflow-icon">📊</span><div><b>Sheets & Excel</b><small>Structured storage, formulas, imports and exports</small></div><em>→</em></div>
+                <div class="workflow-row"><span class="workflow-icon">📁</span><div><b>Drive & documents</b><small>Photos, files, generated PDFs and archives</small></div><em>→</em></div>
+                <div class="workflow-row"><span class="workflow-icon">📈</span><div><b>Dashboards & reports</b><small>KPIs, filters, charts and management visibility</small></div><em>✓</em></div>
+              </div>
+              <div class="code-block"><span>workflow</span>.create(data).validate().save().generatePDF().exportExcel();</div>
             </div>
           </div>
         </div>
@@ -283,348 +299,608 @@
 
     <section id="services">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Services</div>
-            <h2 class="section-title">Clean automation for real office work</h2>
-          </div>
-          <p>Focused on the tasks businesses actually request: spreadsheets, reports, CRM systems, PDF documents, dashboards and internal tools.</p>
+        <div class="section-head reveal">
+          <div><div class="eyebrow">What I build</div><h2 class="section-title">Business tools focused on real operational work</h2></div>
+          <p>Solutions are designed around the actual process: who enters data, who approves it, where files are stored and what management needs to see.</p>
         </div>
         <div class="services">
-          <article class="service"><div class="icon">📊</div><h3>Sheets & Excel systems</h3><p>Structured tables, dashboards, formulas, filtered exports and management reports.</p></article>
-          <article class="service"><div class="icon">⚙️</div><h3>Apps Script web apps</h3><p>Internal business panels with forms, roles, statuses, Drive storage and automation.</p></article>
-          <article class="service"><div class="icon">📄</div><h3>PDF documents</h3><p>Automatic acts, reports, previews, templates, signatures and document workflows.</p></article>
-          <article class="service"><div class="icon">📱</div><h3>Android / Kotlin</h3><p>Mobile forms, product lookup, photo upload, field data capture and Google integration.</p></article>
+          <article class="service reveal"><div class="service-icon">⚙️</div><h3>Apps Script web apps</h3><p>Internal systems with forms, users, roles, statuses, approval flows and Google Workspace integration.</p></article>
+          <article class="service reveal"><div class="service-icon">📊</div><h3>Sheets & Excel automation</h3><p>Structured databases, formulas, imports, exports, dashboards and management-ready reports.</p></article>
+          <article class="service reveal"><div class="service-icon">📄</div><h3>PDF and document workflows</h3><p>Automatic acts, templates, previews, attachments, signatures, timestamps and Drive archives.</p></article>
+          <article class="service reveal"><div class="service-icon">📱</div><h3>Web and mobile tools</h3><p>Responsive interfaces and Android/Kotlin data collection for office and field workflows.</p></article>
         </div>
       </div>
     </section>
 
     <section id="projects">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Projects</div>
-            <h2 class="section-title">Selected portfolio projects</h2>
-          </div>
-          <p>Each screenshot is labeled. Click any screenshot and it opens inside this page in full size.</p>
+        <div class="section-head reveal">
+          <div><div class="eyebrow">Selected work</div><h2 class="section-title">Project case studies with full-size interface galleries</h2></div>
+          <p>Every screen is placed in the correct project and explained. Open a project, use the arrows or thumbnails, and click the large image for full-screen viewing.</p>
         </div>
+        <nav class="project-jump reveal" aria-label="Jump to project"><a href="#acts"><span>01</span>Non-Conformity Acts Management System</a><a href="#vercon"><span>02</span>Vercon</a><a href="#vet"><span>03</span>VetFlow</a><a href="#lab"><span>04</span>Laboratory Sample Tracking System</a><a href="#crm"><span>05</span>ClientFlow CRM</a></nav>
         <div class="projects">
-          
-        <article class="project-card">
-          <div class="project-copy">
-            <div class="eyebrow">Quality Control</div>
-            <h3>Non-Conformity Acts Management System</h3>
-            <p>A business web system for creating and tracking non-conformity acts with statuses, department workflow, PDF generation, photo attachments and Excel export.</p>
-            <div class="tags"><span class="tag">Apps Script</span><span class="tag">Google Sheets</span><span class="tag">Google Drive</span><span class="tag">PDF</span><span class="tag">Excel</span></div>
-            <ul class="features">
-              <li>Role-based access for departments and approvals</li>
-<li>Act registry with filters, statuses and quick actions</li>
-<li>Detailed act view, history timeline and comments</li>
-<li>PDF preview, photo attachments and Excel reporting</li>
-            </ul>
-          </div>
-          <div class="shots-grid">
-            
-              <button class="shot" type="button" data-full="acts_01_login.jpg">
-                <img src="acts_01_login.jpg" alt="Login screen" loading="lazy">
-                <span class="shot-text">
-                  <b>Login screen</b>
-                  <small>Role-based sign-in for different departments.</small>
-                </span>
-              </button>
+    <article class="project" id="acts" data-project="acts">
+      <div class="project-top">
+        <div class="project-number">01</div>
+        <div class="project-heading">
+          <div class="eyebrow">Quality Control · Operational Workflow</div>
+          <h3>Non-Conformity Acts Management System</h3>
+          <p class="project-intro">A role-based business web application that digitizes quality incidents for incoming goods — from registration and evidence collection to approvals, PDF documents and final reporting.</p>
+        </div>
+        <div class="project-type"><span>Project type</span><strong>Production-style business system</strong></div>
+      </div>
 
-              <button class="shot" type="button" data-full="acts_02_registry.jpg">
-                <img src="acts_02_registry.jpg" alt="Act registry" loading="lazy">
-                <span class="shot-text">
-                  <b>Act registry</b>
-                  <small>Searchable list with filters, counters and quick actions.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="acts_03_details.jpg">
-                <img src="acts_03_details.jpg" alt="Act details" loading="lazy">
-                <span class="shot-text">
-                  <b>Act details</b>
-                  <small>Detailed record view with product data and approval fields.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="acts_04_history.jpg">
-                <img src="acts_04_history.jpg" alt="Document history" loading="lazy">
-                <span class="shot-text">
-                  <b>Document history</b>
-                  <small>Status timeline from creation to closing.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="acts_05_create_basic.jpg">
-                <img src="acts_05_create_basic.jpg" alt="Create act — basic data" loading="lazy">
-                <span class="shot-text">
-                  <b>Create act — basic data</b>
-                  <small>New act form with live PDF preview.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="acts_06_create_products.jpg">
-                <img src="acts_06_create_products.jpg" alt="Create act — products" loading="lazy">
-                <span class="shot-text">
-                  <b>Create act — products</b>
-                  <small>Product rows, quantities and reason selection.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="acts_07_attachments.jpg">
-                <img src="acts_07_attachments.jpg" alt="Create act — attachments" loading="lazy">
-                <span class="shot-text">
-                  <b>Create act — attachments</b>
-                  <small>Photo upload blocks for vehicle, seal and issue photos.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="acts_08_excel.jpg">
-                <img src="acts_08_excel.jpg" alt="Excel export" loading="lazy">
-                <span class="shot-text">
-                  <b>Excel export</b>
-                  <small>Exported act registry for offline reporting.</small>
-                </span>
-              </button>
-          </div>
-        </article>
-        <article class="project-card">
-          <div class="project-copy">
-            <div class="eyebrow">Construction</div>
-            <h3>Vercon — Construction Cost Control</h3>
-            <p>Construction project management system for budgets, materials, labor costs, smeta/estimate management, analytics and Excel workbook export.</p>
-            <div class="tags"><span class="tag">Budget Control</span><span class="tag">Smeta</span><span class="tag">Reports</span><span class="tag">Charts</span><span class="tag">Excel</span></div>
-            <ul class="features">
-              <li>Project cards with budget, status and expense tracking</li>
-<li>Materials, labor and estimate modules</li>
-<li>Planned vs actual cost comparison</li>
-<li>Cost summaries, analytics charts and Excel export</li>
-            </ul>
-          </div>
-          <div class="shots-grid">
-            
-              <button class="shot" type="button" data-full="vercon_01_login.jpg">
-                <img src="vercon_01_login.jpg" alt="Login screen" loading="lazy">
-                <span class="shot-text">
-                  <b>Login screen</b>
-                  <small>Branded project management sign-in screen.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_02_projects.jpg">
-                <img src="vercon_02_projects.jpg" alt="Projects dashboard" loading="lazy">
-                <span class="shot-text">
-                  <b>Projects dashboard</b>
-                  <small>Project cards with budgets, dates and statuses.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_03_add_project.jpg">
-                <img src="vercon_03_add_project.jpg" alt="Add project modal" loading="lazy">
-                <span class="shot-text">
-                  <b>Add project modal</b>
-                  <small>Create and edit projects with budget and dates.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_04_users.jpg">
-                <img src="vercon_04_users.jpg" alt="User management" loading="lazy">
-                <span class="shot-text">
-                  <b>User management</b>
-                  <small>Administrator panel for users and roles.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_05_materials.jpg">
-                <img src="vercon_05_materials.jpg" alt="Materials module" loading="lazy">
-                <span class="shot-text">
-                  <b>Materials module</b>
-                  <small>Material expense entry and list management.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_06_smeta_form.jpg">
-                <img src="vercon_06_smeta_form.jpg" alt="Estimate input form" loading="lazy">
-                <span class="shot-text">
-                  <b>Estimate input form</b>
-                  <small>Smeta fields and cost formulas.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_07_smeta_table.jpg">
-                <img src="vercon_07_smeta_table.jpg" alt="Estimate table" loading="lazy">
-                <span class="shot-text">
-                  <b>Estimate table</b>
-                  <small>Detailed estimate with quantities and values.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_08_cost_summary.jpg">
-                <img src="vercon_08_cost_summary.jpg" alt="Cost summary" loading="lazy">
-                <span class="shot-text">
-                  <b>Cost summary</b>
-                  <small>Material, labor and total cost breakdown.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_09_excel.jpg">
-                <img src="vercon_09_excel.jpg" alt="Excel workbook export" loading="lazy">
-                <span class="shot-text">
-                  <b>Excel workbook export</b>
-                  <small>Structured Excel export with multiple sheets.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="vercon_10_charts.jpg">
-                <img src="vercon_10_charts.jpg" alt="Analytics dashboard" loading="lazy">
-                <span class="shot-text">
-                  <b>Analytics dashboard</b>
-                  <small>Charts for cost comparison and variance analysis.</small>
-                </span>
-              </button>
-          </div>
-        </article>
-        <article class="project-card">
-          <div class="project-copy">
-            <div class="eyebrow">Laboratory</div>
-            <h3>Laboratory Sample Tracking System</h3>
-            <p>A laboratory sample tracking platform for products sent to analysis, including status control, product photos, reports and handover documents.</p>
-            <div class="tags"><span class="tag">Tracking</span><span class="tag">Files</span><span class="tag">Photos</span><span class="tag">Statuses</span><span class="tag">Reports</span></div>
-            <ul class="features">
-              <li>Sample registry with search, filters and status cards</li>
-<li>New sample form with product, laboratory and date fields</li>
-<li>Product photos, analysis reports and handover files</li>
-<li>Dashboard for pending and completed analyses</li>
-            </ul>
-          </div>
-          <div class="shots-grid">
-            
-              <button class="shot" type="button" data-full="lab_01_dashboard.jpg">
-                <img src="lab_01_dashboard.jpg" alt="Samples dashboard" loading="lazy">
-                <span class="shot-text">
-                  <b>Samples dashboard</b>
-                  <small>Submitted samples with counters and status table.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="lab_02_files.jpg">
-                <img src="lab_02_files.jpg" alt="Files &amp; sample photos" loading="lazy">
-                <span class="shot-text">
-                  <b>Files &amp; sample photos</b>
-                  <small>Attachment center with photos, reports and documents.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="lab_03_new_sample.jpg">
-                <img src="lab_03_new_sample.jpg" alt="New sample form" loading="lazy">
-                <span class="shot-text">
-                  <b>New sample form</b>
-                  <small>Create or edit sample records.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="lab_04_new_sample_files.jpg">
-                <img src="lab_04_new_sample_files.jpg" alt="Uploaded documents" loading="lazy">
-                <span class="shot-text">
-                  <b>Uploaded documents</b>
-                  <small>Sample form with uploaded product and lab files.</small>
-                </span>
-              </button>
-          </div>
-        </article>
-        <article class="project-card">
-          <div class="project-copy">
-            <div class="eyebrow">CRM</div>
-            <h3>ClientFlow CRM — Sales &amp; Client Management</h3>
-            <p>CRM concept for lead tracking, sales pipeline management, client profiles, tasks, follow-ups, invoices and reports.</p>
-            <div class="tags"><span class="tag">CRM</span><span class="tag">Leads</span><span class="tag">Deals</span><span class="tag">Tasks</span><span class="tag">Reports</span></div>
-            <ul class="features">
-              <li>Sales dashboard with revenue and conversion metrics</li>
-<li>Lead management table with filters and statuses</li>
-<li>Kanban deal pipeline with values in ₽</li>
-<li>Client profiles, tasks and follow-up planner</li>
-            </ul>
-          </div>
-          <div class="shots-grid">
-            
-              <button class="shot" type="button" data-full="crm_01_dashboard.jpg">
-                <img src="crm_01_dashboard.jpg" alt="Sales dashboard" loading="lazy">
-                <span class="shot-text">
-                  <b>Sales dashboard</b>
-                  <small>Leads, revenue, tasks and sales funnel.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="crm_02_leads.jpg">
-                <img src="crm_02_leads.jpg" alt="Lead management" loading="lazy">
-                <span class="shot-text">
-                  <b>Lead management</b>
-                  <small>Lead table with filters, sources and follow-ups.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="crm_03_pipeline.jpg">
-                <img src="crm_03_pipeline.jpg" alt="Deals pipeline" loading="lazy">
-                <span class="shot-text">
-                  <b>Deals pipeline</b>
-                  <small>Kanban board for sales stages and deal values.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="crm_04_client.jpg">
-                <img src="crm_04_client.jpg" alt="Client profile" loading="lazy">
-                <span class="shot-text">
-                  <b>Client profile</b>
-                  <small>Contacts, deals, activity, tasks and documents.</small>
-                </span>
-              </button>
-
-              <button class="shot" type="button" data-full="crm_05_tasks.jpg">
-                <img src="crm_05_tasks.jpg" alt="Tasks &amp; follow-up" loading="lazy">
-                <span class="shot-text">
-                  <b>Tasks &amp; follow-up</b>
-                  <small>Planner for calls, meetings, emails and overdue tasks.</small>
-                </span>
-              </button>
-          </div>
-        </article>
+      <div class="project-brief">
+        <div class="brief-card">
+          <span class="brief-label">Purpose</span>
+          <p>Replace scattered Word files, manual approvals and separate spreadsheets with one traceable workflow.</p>
+        </div>
+        <div class="brief-card">
+          <span class="brief-label">Business value</span>
+          <p>Faster act creation, consistent document formatting, clear responsibility by department and a complete audit trail.</p>
         </div>
       </div>
-    </section>
 
-    <section id="skills">
-      <div class="wrap">
-        <div class="section-head">
+      <div class="tag-row"><span class="tag">Google Apps Script</span><span class="tag">Google Sheets</span><span class="tag">Google Drive</span><span class="tag">PDF generation</span><span class="tag">Excel export</span><span class="tag">Role-based access</span></div>
+      <div class="feature-grid"><article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Role-based workflow</h4><p>Separate interfaces and actions for Quality, Procurement, Finance and management approvals.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Structured act registry</h4><p>Search, filters, counters, statuses and quick actions for every non-conformity record.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Documents and evidence</h4><p>Product rows, issue reasons, vehicle/seal photos, attachments and live PDF preview.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Traceability and reporting</h4><p>Status history, comments, timestamps, closing flow and filtered Excel exports.</p></div>
+            </article></div>
+
+      <section class="gallery" aria-label="Non-Conformity Acts Management System screenshots">
+        <div class="gallery-toolbar">
           <div>
-            <div class="eyebrow">Skills</div>
-            <h2 class="section-title">Technology stack</h2>
+            <span class="gallery-label">Interactive project gallery</span>
+            <strong>Use arrows, thumbnails, keyboard or swipe</strong>
           </div>
-          <p>Broad enough for freelance work, but focused on real business automation tasks.</p>
+          <div class="gallery-actions">
+            <button class="gallery-play" type="button" aria-pressed="false">▶ Auto play</button>
+            <span class="gallery-counter"><b>01</b> / 08</span>
+          </div>
         </div>
-        <div class="services">
-          <article class="service"><div class="icon">🧩</div><h3>Google Apps Script</h3><p>Web apps, automation, Drive integration, custom buttons and workflows.</p></article>
-          <article class="service"><div class="icon">📈</div><h3>Google Sheets / Excel</h3><p>Databases, dashboards, formulas, import/export and structured reporting.</p></article>
-          <article class="service"><div class="icon">💻</div><h3>HTML / CSS / JavaScript</h3><p>Clean internal panels, forms, tables, modals, filters and responsive interfaces.</p></article>
-          <article class="service"><div class="icon">📱</div><h3>Android / Kotlin</h3><p>Mobile data entry, product search, photo upload and field workflow tools.</p></article>
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><i></i><i></i><i></i></div>
+            <div class="browser-address">sheetflow.app / acts</div>
+            <button class="open-full" type="button" aria-label="Open screenshot in full screen">↗</button>
+          </div>
+          <div class="gallery-stage">
+            <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
+            <img class="gallery-main" src="assets/acts_01_login.webp" alt="Secure role-based login">
+            <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
+          </div>
         </div>
+        <div class="gallery-caption">
+          <div class="caption-index">01</div>
+          <div>
+            <h4>Secure role-based login</h4>
+            <p>Department selection and protected access to the operational system.</p>
+          </div>
+        </div>
+        <div class="thumbs"><button class="thumb active" type="button"
+              data-src="assets/acts_01_login.webp" data-title="Secure role-based login" data-description="Department selection and protected access to the operational system."
+              aria-label="Show screenshot 1: Secure role-based login">
+              <img src="assets/acts_01_login.webp" alt="" loading="lazy">
+              <span>01</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/acts_02_registry.webp" data-title="Act registry and status control" data-description="Central register with search, filters, status badges, counters and quick actions."
+              aria-label="Show screenshot 2: Act registry and status control">
+              <img src="assets/acts_02_registry.webp" alt="" loading="lazy">
+              <span>02</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/acts_03_details.webp" data-title="Detailed act card" data-description="Complete incident information, product data, responsibility fields and approval actions."
+              aria-label="Show screenshot 3: Detailed act card">
+              <img src="assets/acts_03_details.webp" alt="" loading="lazy">
+              <span>03</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/acts_04_history.webp" data-title="Document history timeline" data-description="A chronological audit trail from creation through departmental approvals and closure."
+              aria-label="Show screenshot 4: Document history timeline">
+              <img src="assets/acts_04_history.webp" alt="" loading="lazy">
+              <span>04</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/acts_05_create_basic.webp" data-title="Create act — general information" data-description="Basic act data with a live PDF preview that updates during data entry."
+              aria-label="Show screenshot 5: Create act — general information">
+              <img src="assets/acts_05_create_basic.webp" alt="" loading="lazy">
+              <span>05</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/acts_06_create_products.webp" data-title="Create act — products and templates" data-description="Multiple product lines, quantities, reasons and reusable text templates."
+              aria-label="Show screenshot 6: Create act — products and templates">
+              <img src="assets/acts_06_create_products.webp" alt="" loading="lazy">
+              <span>06</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/acts_07_attachments.webp" data-title="Photo and file attachments" data-description="Dedicated upload areas for vehicle, seal and non-conformity evidence."
+              aria-label="Show screenshot 7: Photo and file attachments">
+              <img src="assets/acts_07_attachments.webp" alt="" loading="lazy">
+              <span>07</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/acts_08_excel.webp" data-title="Excel reporting export" data-description="A structured registry export for analysis, archiving and management reporting."
+              aria-label="Show screenshot 8: Excel reporting export">
+              <img src="assets/acts_08_excel.webp" alt="" loading="lazy">
+              <span>08</span>
+            </button></div>
+      </section>
+    </article>
+    
+
+    <article class="project" id="vercon" data-project="vercon">
+      <div class="project-top">
+        <div class="project-number">02</div>
+        <div class="project-heading">
+          <div class="eyebrow">Construction · Budget &amp; Cost Control</div>
+          <h3>Vercon — Construction Cost Control</h3>
+          <p class="project-intro">A construction management platform for project budgets, material expenses, labor costs, estimates, Excel-based data exchange and planned-versus-actual analytics.</p>
+        </div>
+        <div class="project-type"><span>Project type</span><strong>Internal project management system</strong></div>
+      </div>
+
+      <div class="project-brief">
+        <div class="brief-card">
+          <span class="brief-label">Purpose</span>
+          <p>Give managers one place to control project budgets, costs, estimates and remaining balances.</p>
+        </div>
+        <div class="brief-card">
+          <span class="brief-label">Business value</span>
+          <p>Immediate visibility into overspending, cost structure, project progress and the gap between planned and actual expenses.</p>
+        </div>
+      </div>
+
+      <div class="tag-row"><span class="tag">Budget control</span><span class="tag">Cost estimates</span><span class="tag">Materials</span><span class="tag">Labor</span><span class="tag">Excel import/export</span><span class="tag">Analytics</span></div>
+      <div class="feature-grid"><article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Project portfolio</h4><p>Project cards with budgets, dates, status, spent amount and remaining balance.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Expense management</h4><p>Material, contractor and labor entries with payment status and transaction history.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Estimate management</h4><p>Structured estimate sheets with quantities, unit prices, formulas and editable rows.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Management analytics</h4><p>Cost summaries, category charts, planned-versus-actual comparison and Excel workbooks.</p></div>
+            </article></div>
+
+      <section class="gallery" aria-label="Vercon — Construction Cost Control screenshots">
+        <div class="gallery-toolbar">
+          <div>
+            <span class="gallery-label">Interactive project gallery</span>
+            <strong>Use arrows, thumbnails, keyboard or swipe</strong>
+          </div>
+          <div class="gallery-actions">
+            <button class="gallery-play" type="button" aria-pressed="false">▶ Auto play</button>
+            <span class="gallery-counter"><b>01</b> / 10</span>
+          </div>
+        </div>
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><i></i><i></i><i></i></div>
+            <div class="browser-address">sheetflow.app / vercon</div>
+            <button class="open-full" type="button" aria-label="Open screenshot in full screen">↗</button>
+          </div>
+          <div class="gallery-stage">
+            <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
+            <img class="gallery-main" src="assets/vercon_01_login.webp" alt="Branded login experience">
+            <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
+          </div>
+        </div>
+        <div class="gallery-caption">
+          <div class="caption-index">01</div>
+          <div>
+            <h4>Branded login experience</h4>
+            <p>Secure sign-in with a clear summary of the platform&#x27;s main capabilities.</p>
+          </div>
+        </div>
+        <div class="thumbs"><button class="thumb active" type="button"
+              data-src="assets/vercon_01_login.webp" data-title="Branded login experience" data-description="Secure sign-in with a clear summary of the platform&#x27;s main capabilities."
+              aria-label="Show screenshot 1: Branded login experience">
+              <img src="assets/vercon_01_login.webp" alt="" loading="lazy">
+              <span>01</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_02_projects.webp" data-title="Projects dashboard" data-description="All projects displayed with budget, date, status and balance information."
+              aria-label="Show screenshot 2: Projects dashboard">
+              <img src="assets/vercon_02_projects.webp" alt="" loading="lazy">
+              <span>02</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_03_add_project.webp" data-title="Create and edit projects" data-description="Project form for budget, dates, status, notes and visual identification."
+              aria-label="Show screenshot 3: Create and edit projects">
+              <img src="assets/vercon_03_add_project.webp" alt="" loading="lazy">
+              <span>03</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_04_users.webp" data-title="User and role management" data-description="Administrator workspace for creating users and assigning system roles."
+              aria-label="Show screenshot 4: User and role management">
+              <img src="assets/vercon_04_users.webp" alt="" loading="lazy">
+              <span>04</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_05_expenses.webp" data-title="Expense management module" data-description="Material and contractor expense entry with quantities, prices, vendors and payment status."
+              aria-label="Show screenshot 5: Expense management module">
+              <img src="assets/vercon_05_expenses.webp" alt="" loading="lazy">
+              <span>05</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_06_estimate_form.webp" data-title="Estimate calculation form" data-description="Formula-driven inputs for planned quantity, material cost, labor cost and total budget."
+              aria-label="Show screenshot 6: Estimate calculation form">
+              <img src="assets/vercon_06_estimate_form.webp" alt="" loading="lazy">
+              <span>06</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_07_estimate_table.webp" data-title="Detailed estimate table" data-description="Large structured estimate with sections, quantities, unit values, actuals and variance."
+              aria-label="Show screenshot 7: Detailed estimate table">
+              <img src="assets/vercon_07_estimate_table.webp" alt="" loading="lazy">
+              <span>07</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_08_cost_summary.webp" data-title="Cost summary and KPIs" data-description="Material, labor and overall totals with planned, actual, variance and completion indicators."
+              aria-label="Show screenshot 8: Cost summary and KPIs">
+              <img src="assets/vercon_08_cost_summary.webp" alt="" loading="lazy">
+              <span>08</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_09_excel.webp" data-title="Excel workbook export" data-description="Multi-sheet workbook for offline review, financial control and document exchange."
+              aria-label="Show screenshot 9: Excel workbook export">
+              <img src="assets/vercon_09_excel.webp" alt="" loading="lazy">
+              <span>09</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vercon_10_analytics.webp" data-title="Analytics dashboard" data-description="Visual breakdowns by category, completion, cost type and planned-versus-actual performance."
+              aria-label="Show screenshot 10: Analytics dashboard">
+              <img src="assets/vercon_10_analytics.webp" alt="" loading="lazy">
+              <span>10</span>
+            </button></div>
+      </section>
+    </article>
+    
+
+    <article class="project" id="vet" data-project="vet">
+      <div class="project-top">
+        <div class="project-number">03</div>
+        <div class="project-heading">
+          <div class="eyebrow">Veterinary · Clinic Operations</div>
+          <h3>VetFlow — Veterinary Clinic Management</h3>
+          <p class="project-intro">A clean clinic management platform that combines patient records, pet owners, appointments, warehouse control and operational reporting in a single interface.</p>
+        </div>
+        <div class="project-type"><span>Project type</span><strong>UI workflow prototype</strong></div>
+      </div>
+
+      <div class="project-brief">
+        <div class="brief-card">
+          <span class="brief-label">Purpose</span>
+          <p>Organize daily veterinary work and keep clinical, customer and inventory information connected.</p>
+        </div>
+        <div class="brief-card">
+          <span class="brief-label">Business value</span>
+          <p>Fewer missed appointments, faster access to patient history and better control of medicines, supplies and clinic workload.</p>
+        </div>
+      </div>
+
+      <div class="tag-row"><span class="tag">Patient records</span><span class="tag">Appointments</span><span class="tag">Owners</span><span class="tag">Inventory</span><span class="tag">Reports</span><span class="tag">Responsive UI</span></div>
+      <div class="feature-grid"><article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Patient database</h4><p>Animal profiles with species, breed, owner, medical information and current status.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Owner management</h4><p>Customer contacts, linked pets, balances and communication history.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Appointment board</h4><p>Scheduling, status tracking and a visual workflow for clinic visits.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Warehouse and reports</h4><p>Inventory stock, low-balance indicators, operational KPIs and printable reports.</p></div>
+            </article></div>
+
+      <section class="gallery" aria-label="VetFlow — Veterinary Clinic Management screenshots">
+        <div class="gallery-toolbar">
+          <div>
+            <span class="gallery-label">Interactive project gallery</span>
+            <strong>Use arrows, thumbnails, keyboard or swipe</strong>
+          </div>
+          <div class="gallery-actions">
+            <button class="gallery-play" type="button" aria-pressed="false">▶ Auto play</button>
+            <span class="gallery-counter"><b>01</b> / 06</span>
+          </div>
+        </div>
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><i></i><i></i><i></i></div>
+            <div class="browser-address">sheetflow.app / vet</div>
+            <button class="open-full" type="button" aria-label="Open screenshot in full screen">↗</button>
+          </div>
+          <div class="gallery-stage">
+            <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
+            <img class="gallery-main" src="assets/vet_01_dashboard.webp" alt="Clinic dashboard">
+            <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
+          </div>
+        </div>
+        <div class="gallery-caption">
+          <div class="caption-index">01</div>
+          <div>
+            <h4>Clinic dashboard</h4>
+            <p>Daily overview with quick actions, clinic metrics and featured patient information.</p>
+          </div>
+        </div>
+        <div class="thumbs"><button class="thumb active" type="button"
+              data-src="assets/vet_01_dashboard.webp" data-title="Clinic dashboard" data-description="Daily overview with quick actions, clinic metrics and featured patient information."
+              aria-label="Show screenshot 1: Clinic dashboard">
+              <img src="assets/vet_01_dashboard.webp" alt="" loading="lazy">
+              <span>01</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vet_02_patients.webp" data-title="Patient registry" data-description="Searchable pet database with species, breed, owner, visit date and status."
+              aria-label="Show screenshot 2: Patient registry">
+              <img src="assets/vet_02_patients.webp" alt="" loading="lazy">
+              <span>02</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vet_03_owners.webp" data-title="Pet owner management" data-description="Customer list with linked animals, contact details and account information."
+              aria-label="Show screenshot 3: Pet owner management">
+              <img src="assets/vet_03_owners.webp" alt="" loading="lazy">
+              <span>03</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vet_04_appointments.webp" data-title="Appointment workflow board" data-description="Visual scheduling board for planned, confirmed, in-progress and completed visits."
+              aria-label="Show screenshot 4: Appointment workflow board">
+              <img src="assets/vet_04_appointments.webp" alt="" loading="lazy">
+              <span>04</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vet_05_warehouse.webp" data-title="Warehouse and stock control" data-description="Medicine and supply inventory with quantities, categories, values and stock status."
+              aria-label="Show screenshot 5: Warehouse and stock control">
+              <img src="assets/vet_05_warehouse.webp" alt="" loading="lazy">
+              <span>05</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/vet_06_reports.webp" data-title="Reports center" data-description="Operational, financial, inventory and appointment reports prepared for export."
+              aria-label="Show screenshot 6: Reports center">
+              <img src="assets/vet_06_reports.webp" alt="" loading="lazy">
+              <span>06</span>
+            </button></div>
+      </section>
+    </article>
+    
+
+    <article class="project" id="lab" data-project="lab">
+      <div class="project-top">
+        <div class="project-number">04</div>
+        <div class="project-heading">
+          <div class="eyebrow">Laboratory · Sample Tracking</div>
+          <h3>Laboratory Sample Tracking System</h3>
+          <p class="project-intro">A sample tracking application for products sent to external laboratories, with deadlines, status control, product photos, analysis reports and handover documentation.</p>
+        </div>
+        <div class="project-type"><span>Project type</span><strong>Internal tracking system</strong></div>
+      </div>
+
+      <div class="project-brief">
+        <div class="brief-card">
+          <span class="brief-label">Purpose</span>
+          <p>Create a reliable register for every sample from dispatch to the final laboratory result.</p>
+        </div>
+        <div class="brief-card">
+          <span class="brief-label">Business value</span>
+          <p>Clear deadlines, fewer lost files, quick access to evidence and an accurate view of pending or completed analyses.</p>
+        </div>
+      </div>
+
+      <div class="tag-row"><span class="tag">Sample registry</span><span class="tag">Status tracking</span><span class="tag">Photos</span><span class="tag">Documents</span><span class="tag">Deadlines</span><span class="tag">Reports</span></div>
+      <div class="feature-grid"><article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Central sample registry</h4><p>Product, manufacturer, dates, quantity, laboratory and result status in one table.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Deadline monitoring</h4><p>Counters and filters for pending, completed and overdue laboratory analyses.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Evidence management</h4><p>Product photos, request files, laboratory reports and handover documents.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Controlled data entry</h4><p>Create/edit form with validation, file previews and consistent record structure.</p></div>
+            </article></div>
+
+      <section class="gallery" aria-label="Laboratory Sample Tracking System screenshots">
+        <div class="gallery-toolbar">
+          <div>
+            <span class="gallery-label">Interactive project gallery</span>
+            <strong>Use arrows, thumbnails, keyboard or swipe</strong>
+          </div>
+          <div class="gallery-actions">
+            <button class="gallery-play" type="button" aria-pressed="false">▶ Auto play</button>
+            <span class="gallery-counter"><b>01</b> / 04</span>
+          </div>
+        </div>
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><i></i><i></i><i></i></div>
+            <div class="browser-address">sheetflow.app / lab</div>
+            <button class="open-full" type="button" aria-label="Open screenshot in full screen">↗</button>
+          </div>
+          <div class="gallery-stage">
+            <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
+            <img class="gallery-main" src="assets/lab_01_dashboard.webp" alt="Samples dashboard">
+            <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
+          </div>
+        </div>
+        <div class="gallery-caption">
+          <div class="caption-index">01</div>
+          <div>
+            <h4>Samples dashboard</h4>
+            <p>Counters, filters and a detailed register of products submitted for analysis.</p>
+          </div>
+        </div>
+        <div class="thumbs"><button class="thumb active" type="button"
+              data-src="assets/lab_01_dashboard.webp" data-title="Samples dashboard" data-description="Counters, filters and a detailed register of products submitted for analysis."
+              aria-label="Show screenshot 1: Samples dashboard">
+              <img src="assets/lab_01_dashboard.webp" alt="" loading="lazy">
+              <span>01</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/lab_02_files.webp" data-title="Files and sample photos" data-description="Attachment center for product images, analysis reports and related documents."
+              aria-label="Show screenshot 2: Files and sample photos">
+              <img src="assets/lab_02_files.webp" alt="" loading="lazy">
+              <span>02</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/lab_03_sample_form.webp" data-title="New sample form" data-description="Structured entry of product, manufacturer, production dates, quantity and laboratory."
+              aria-label="Show screenshot 3: New sample form">
+              <img src="assets/lab_03_sample_form.webp" alt="" loading="lazy">
+              <span>03</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/lab_04_uploaded_files.webp" data-title="Sample form with uploaded evidence" data-description="Preview of attached product photos, request documents and laboratory files."
+              aria-label="Show screenshot 4: Sample form with uploaded evidence">
+              <img src="assets/lab_04_uploaded_files.webp" alt="" loading="lazy">
+              <span>04</span>
+            </button></div>
+      </section>
+    </article>
+    
+
+    <article class="project" id="crm" data-project="crm">
+      <div class="project-top">
+        <div class="project-number">05</div>
+        <div class="project-heading">
+          <div class="eyebrow">Sales · CRM Portfolio Concept</div>
+          <h3>ClientFlow CRM — Sales &amp; Client Management</h3>
+          <p class="project-intro">A portfolio CRM concept that demonstrates a complete sales workflow: lead capture, pipeline management, client profiles, tasks, follow-ups and performance reporting.</p>
+        </div>
+        <div class="project-type"><span>Project type</span><strong>Portfolio concept / workflow prototype</strong></div>
+      </div>
+
+      <div class="project-brief">
+        <div class="brief-card">
+          <span class="brief-label">Purpose</span>
+          <p>Show how a small business can replace fragmented sales spreadsheets with one structured CRM workspace.</p>
+        </div>
+        <div class="brief-card">
+          <span class="brief-label">Business value</span>
+          <p>A clearer pipeline, fewer forgotten follow-ups, better client visibility and measurable sales performance.</p>
+        </div>
+      </div>
+
+      <div class="tag-row"><span class="tag">CRM</span><span class="tag">Lead management</span><span class="tag">Sales pipeline</span><span class="tag">Client profiles</span><span class="tag">Tasks</span><span class="tag">Analytics</span></div>
+      <div class="feature-grid"><article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Sales dashboard</h4><p>Revenue, leads, conversion, tasks, funnel performance and recent activity.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Lead management</h4><p>Sources, statuses, responsible managers, next actions and filtering.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Pipeline workflow</h4><p>Kanban stages with deal values, priorities and expected close dates.</p></div>
+            </article>
+<article class="feature-card">
+              <div class="feature-check">✓</div>
+              <div><h4>Client and follow-up control</h4><p>Contact profiles, deal history, tasks, meetings and overdue reminders.</p></div>
+            </article></div>
+
+      <section class="gallery" aria-label="ClientFlow CRM — Sales &amp; Client Management screenshots">
+        <div class="gallery-toolbar">
+          <div>
+            <span class="gallery-label">Interactive project gallery</span>
+            <strong>Use arrows, thumbnails, keyboard or swipe</strong>
+          </div>
+          <div class="gallery-actions">
+            <button class="gallery-play" type="button" aria-pressed="false">▶ Auto play</button>
+            <span class="gallery-counter"><b>01</b> / 05</span>
+          </div>
+        </div>
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><i></i><i></i><i></i></div>
+            <div class="browser-address">sheetflow.app / crm</div>
+            <button class="open-full" type="button" aria-label="Open screenshot in full screen">↗</button>
+          </div>
+          <div class="gallery-stage">
+            <button class="gallery-nav prev" type="button" aria-label="Previous screenshot">‹</button>
+            <img class="gallery-main" src="assets/crm_01_dashboard.webp" alt="Sales performance dashboard">
+            <button class="gallery-nav next" type="button" aria-label="Next screenshot">›</button>
+          </div>
+        </div>
+        <div class="gallery-caption">
+          <div class="caption-index">01</div>
+          <div>
+            <h4>Sales performance dashboard</h4>
+            <p>Revenue trends, funnel metrics, lead activity and upcoming tasks.</p>
+          </div>
+        </div>
+        <div class="thumbs"><button class="thumb active" type="button"
+              data-src="assets/crm_01_dashboard.webp" data-title="Sales performance dashboard" data-description="Revenue trends, funnel metrics, lead activity and upcoming tasks."
+              aria-label="Show screenshot 1: Sales performance dashboard">
+              <img src="assets/crm_01_dashboard.webp" alt="" loading="lazy">
+              <span>01</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/crm_02_leads.webp" data-title="Lead management workspace" data-description="Lead list with sources, statuses, owners, values and follow-up actions."
+              aria-label="Show screenshot 2: Lead management workspace">
+              <img src="assets/crm_02_leads.webp" alt="" loading="lazy">
+              <span>02</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/crm_03_pipeline.webp" data-title="Kanban deal pipeline" data-description="Deals grouped by sales stage with values, priorities and progress indicators."
+              aria-label="Show screenshot 3: Kanban deal pipeline">
+              <img src="assets/crm_03_pipeline.webp" alt="" loading="lazy">
+              <span>03</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/crm_04_clients.webp" data-title="Client database and profiles" data-description="Customer records with contacts, active deals, history and segmentation."
+              aria-label="Show screenshot 4: Client database and profiles">
+              <img src="assets/crm_04_clients.webp" alt="" loading="lazy">
+              <span>04</span>
+            </button>
+<button class="thumb" type="button"
+              data-src="assets/crm_05_tasks.webp" data-title="Tasks and follow-up planner" data-description="Calls, meetings, emails, deadlines, reminders and overdue work in one screen."
+              aria-label="Show screenshot 5: Tasks and follow-up planner">
+              <img src="assets/crm_05_tasks.webp" alt="" loading="lazy">
+              <span>05</span>
+            </button></div>
+      </section>
+    </article>
+    </div>
       </div>
     </section>
 
     <section id="contact">
       <div class="wrap">
-        <div class="contact">
+        <div class="contact reveal">
           <div>
-            <h2>Need a business automation tool?</h2>
-            <p>Available for freelance tasks: spreadsheets, reports, PDF generation, CRM workflows and internal business systems.</p>
+            <div class="eyebrow">Available for freelance work</div>
+            <h2>Need a system that removes repetitive office work?</h2>
+            <p>I can help with Google Apps Script, Google Sheets, Excel, PDF generation, internal dashboards, CRM workflows and business web applications.</p>
           </div>
           <div class="contact-actions">
-            <a class="btn primary" href="mailto:sheetflow.automation@gmail.com">sheetflow.automation@gmail.com</a>
-            <a class="btn telegram" href="https://t.me/SheetFlowAutomation" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.78 15.59 9.4 20.9c.54 0 .78-.23 1.06-.51l2.55-2.44 5.29 3.87c.97.54 1.65.26 1.91-.89l3.46-16.22h.01c.31-1.43-.52-1.99-1.46-1.64L1.9 10.84C.51 11.38.53 12.16 1.66 12.5l5.56 1.73L20.13 6.15c.61-.4 1.16-.18.71.23L9.78 15.59Z"/></svg>
-              @SheetFlowAutomation
-            </a>
+            <a class="btn primary" href="mailto:sheetflow.automation@gmail.com">Email me</a>
+            <a class="btn secondary" href="https://t.me/SheetFlowAutomation" target="_blank" rel="noopener">@SheetFlowAutomation</a>
           </div>
         </div>
       </div>
@@ -632,40 +908,146 @@
   </main>
 
   <footer>
-    <div class="wrap footer-inner">
-      <div>© 2026 SheetFlow Automation</div>
-      <div>Google Sheets · Apps Script · Excel · PDF · CRM · Android/Kotlin</div>
-    </div>
+    <div class="wrap footer-inner"><div>© 2026 SheetFlow Automation</div><div>Google Apps Script · Sheets · Excel · PDF · CRM · Web Apps · Android/Kotlin</div></div>
   </footer>
 
   <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox-close" type="button" aria-label="Close screenshot">×</button>
-    <img src="" alt="Full screenshot preview">
+    <div class="lightbox-top"><div><strong id="lightboxProject">Project gallery</strong><div class="lightbox-count" id="lightboxCount"></div></div><button class="lightbox-close" type="button" aria-label="Close">×</button></div>
+    <div class="lightbox-stage">
+      <button class="lightbox-nav prev" type="button" aria-label="Previous">‹</button>
+      <img class="lightbox-image" src="" alt="">
+      <button class="lightbox-nav next" type="button" aria-label="Next">›</button>
+    </div>
+    <div class="lightbox-caption"><h4></h4><p></p></div>
   </div>
 
   <script>
     (function(){
+      const galleries = [];
       const lightbox = document.getElementById('lightbox');
-      const img = lightbox.querySelector('img');
-      const close = lightbox.querySelector('.lightbox-close');
+      const lbImage = lightbox.querySelector('.lightbox-image');
+      const lbTitle = lightbox.querySelector('.lightbox-caption h4');
+      const lbDescription = lightbox.querySelector('.lightbox-caption p');
+      const lbProject = document.getElementById('lightboxProject');
+      const lbCount = document.getElementById('lightboxCount');
+      let activeGallery = null;
 
-      document.addEventListener('click', function(e){
-        const shot = e.target.closest('.shot[data-full]');
-        if(!shot) return;
-        img.src = shot.getAttribute('data-full');
-        lightbox.classList.add('open');
-        lightbox.setAttribute('aria-hidden','false');
+      document.querySelectorAll('.gallery').forEach((gallery) => {
+        const project = gallery.closest('.project');
+        const projectTitle = project.querySelector('.project-heading h3').textContent.trim();
+        const main = gallery.querySelector('.gallery-main');
+        const stage = gallery.querySelector('.gallery-stage');
+        const thumbs = [...gallery.querySelectorAll('.thumb')];
+        const counter = gallery.querySelector('.gallery-counter b');
+        const captionIndex = gallery.querySelector('.caption-index');
+        const captionTitle = gallery.querySelector('.gallery-caption h4');
+        const captionDescription = gallery.querySelector('.gallery-caption p');
+        const playButton = gallery.querySelector('.gallery-play');
+        let index = 0;
+        let timer = null;
+        let touchStartX = 0;
+
+        const data = thumbs.map(t => ({
+          src:t.dataset.src,
+          title:t.dataset.title,
+          description:t.dataset.description
+        }));
+
+        const api = {
+          gallery, projectTitle, data,
+          get index(){return index;},
+          show(nextIndex, animate=true){
+            index = (nextIndex + data.length) % data.length;
+            const item = data[index];
+            if(animate) stage.classList.add('changing');
+            window.setTimeout(() => {
+              main.src = item.src;
+              main.alt = item.title;
+              captionTitle.textContent = item.title;
+              captionDescription.textContent = item.description;
+              const n = String(index + 1).padStart(2,'0');
+              counter.textContent = n;
+              captionIndex.textContent = n;
+              thumbs.forEach((thumb,i) => thumb.classList.toggle('active', i === index));
+              thumbs[index].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+              stage.classList.remove('changing');
+              if(lightbox.classList.contains('open') && activeGallery === api) updateLightbox();
+            }, animate ? 120 : 0);
+          },
+          next(){api.show(index + 1);},
+          prev(){api.show(index - 1);},
+          start(){
+            if(timer) return;
+            timer = setInterval(api.next, 5500);
+            playButton.setAttribute('aria-pressed','true');
+            playButton.textContent = '❚❚ Pause';
+          },
+          stop(){
+            clearInterval(timer); timer = null;
+            playButton.setAttribute('aria-pressed','false');
+            playButton.textContent = '▶ Auto play';
+          },
+          open(){
+            activeGallery = api;
+            lightbox.classList.add('open');
+            lightbox.setAttribute('aria-hidden','false');
+            document.body.style.overflow='hidden';
+            updateLightbox();
+          }
+        };
+
+        gallery.querySelector('.prev').addEventListener('click', api.prev);
+        gallery.querySelector('.next').addEventListener('click', api.next);
+        gallery.querySelector('.open-full').addEventListener('click', api.open);
+        main.addEventListener('click', api.open);
+        thumbs.forEach((thumb,i) => thumb.addEventListener('click', () => api.show(i)));
+        playButton.addEventListener('click', () => timer ? api.stop() : api.start());
+        stage.addEventListener('mouseenter', () => timer && clearInterval(timer));
+        stage.addEventListener('mouseleave', () => {
+          if(playButton.getAttribute('aria-pressed') === 'true') {
+            clearInterval(timer); timer=setInterval(api.next,5500);
+          }
+        });
+        stage.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].clientX, {passive:true});
+        stage.addEventListener('touchend', e => {
+          const dx = e.changedTouches[0].clientX - touchStartX;
+          if(Math.abs(dx) > 45) dx < 0 ? api.next() : api.prev();
+        }, {passive:true});
+
+        galleries.push(api);
       });
 
+      function updateLightbox(){
+        if(!activeGallery) return;
+        const item = activeGallery.data[activeGallery.index];
+        lbImage.src = item.src;
+        lbImage.alt = item.title;
+        lbTitle.textContent = item.title;
+        lbDescription.textContent = item.description;
+        lbProject.textContent = activeGallery.projectTitle;
+        lbCount.textContent = `${String(activeGallery.index+1).padStart(2,'0')} / ${String(activeGallery.data.length).padStart(2,'0')}`;
+      }
       function closeLightbox(){
         lightbox.classList.remove('open');
         lightbox.setAttribute('aria-hidden','true');
-        img.src = '';
+        document.body.style.overflow='';
+        lbImage.src='';
       }
+      lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+      lightbox.querySelector('.lightbox-nav.prev').addEventListener('click', () => activeGallery && activeGallery.prev());
+      lightbox.querySelector('.lightbox-nav.next').addEventListener('click', () => activeGallery && activeGallery.next());
+      lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', e => {
+        if(!lightbox.classList.contains('open')) return;
+        if(e.key === 'Escape') closeLightbox();
+        if(e.key === 'ArrowLeft' && activeGallery) activeGallery.prev();
+        if(e.key === 'ArrowRight' && activeGallery) activeGallery.next();
+      });
 
-      close.addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
-      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+      }, {threshold:.10});
+      document.querySelectorAll('.reveal,.project').forEach(el => { el.classList.add('reveal'); observer.observe(el); });
     })();
   </script>
 </body>
