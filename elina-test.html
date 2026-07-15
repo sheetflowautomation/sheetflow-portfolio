@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ff7aa8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Тест для Элинусницы 💗</title>
+  <style>
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      color:#302631;
+      background:linear-gradient(180deg,#fff9fc,#fff2f7);
+      padding:max(14px,env(safe-area-inset-top)) 12px max(20px,env(safe-area-inset-bottom));
+    }
+    button{font:inherit;touch-action:manipulation}
+    .app{max-width:720px;margin:0 auto}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .logo{
+      width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+      color:#fff;font-size:22px;background:linear-gradient(135deg,#ff6f9f,#9578ff);
+      box-shadow:0 8px 22px rgba(255,111,159,.24)
+    }
+    .brand small{display:block;color:#806e7c;font-size:12px;margin-top:2px}
+    .card{
+      background:#fff;border:1px solid #f1e0e9;border-radius:26px;
+      box-shadow:0 16px 44px rgba(151,83,119,.13);
+      padding:22px 16px;
+    }
+    .screen{display:none}
+    .screen.active{display:block}
+    .eyebrow{
+      color:#ff6f9f;text-transform:uppercase;letter-spacing:.08em;
+      font-size:11px;font-weight:900
+    }
+    h1{font-size:clamp(32px,9vw,52px);line-height:1.02;letter-spacing:-.045em;margin:12px 0 16px}
+    h2{font-size:clamp(26px,7vw,38px);letter-spacing:-.035em;margin:5px 0 5px}
+    p{color:#806e7c;line-height:1.55}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:19px 0}
+    .chip{border:1px solid #efdee7;border-radius:999px;padding:8px 11px;font-size:13px;font-weight:750}
+    .info{background:#fff7fa;border:1px solid #efdee7;border-radius:17px;padding:14px;font-size:14px;color:#806e7c}
+    .info b{color:#302631}
+    .btn,.ghost{
+      appearance:none;-webkit-appearance:none;border:0;border-radius:16px;
+      min-height:50px;padding:14px 16px;font-size:16px;font-weight:900
+    }
+    .btn{color:#fff;background:linear-gradient(135deg,#ff6f9f,#ff9abb);box-shadow:0 10px 24px rgba(255,111,159,.23)}
+    .ghost{color:#302631;background:#fff;border:1px solid #efdee7}
+    .btn:disabled{opacity:.42}
+    .start{width:100%;margin-top:18px}
+    .quiz-head p{margin:0;font-size:14px}
+    .badge{
+      display:inline-block;margin-top:11px;padding:8px 11px;border-radius:999px;
+      color:#ff5f96;background:#fff0f5;font-size:13px;font-weight:900
+    }
+    .progress-wrap{height:10px;background:#f4e6ed;border-radius:999px;overflow:hidden;margin:18px 0 23px}
+    .progress{height:100%;width:0;background:linear-gradient(90deg,#ff6f9f,#9578ff)}
+    .question{font-size:clamp(23px,6.4vw,31px);line-height:1.24;font-weight:900;letter-spacing:-.03em;margin-bottom:16px}
+    .answers{display:grid;gap:10px}
+    .answer{
+      width:100%;min-height:58px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:12px;
+      appearance:none;-webkit-appearance:none;background:#fff;border:1px solid #efdee7;border-radius:17px;
+      padding:14px;color:#302631;font-size:15px;font-weight:800
+    }
+    .answer.selected{color:#fff;border-color:transparent;background:linear-gradient(135deg,#ff6f9f,#9578ff)}
+    .num{
+      width:29px;height:29px;flex:0 0 29px;border-radius:50%;display:grid;place-items:center;
+      background:#fff3f7;color:#a36c85;font-size:13px;font-weight:900
+    }
+    .answer.selected .num{background:rgba(255,255,255,.2);color:#fff}
+    .nav{display:flex;gap:10px;margin-top:20px}
+    .nav button{flex:1}
+    .result-head{text-align:center}
+    .result-head p{margin:0}
+    .score-box,.mini,.section-box{
+      background:#fff;border:1px solid #efdee7;border-radius:20px;padding:17px
+    }
+    .score-box{margin-top:20px;text-align:center}
+    .ring{
+      --score:0;width:142px;height:142px;margin:0 auto 14px;border-radius:50%;
+      display:grid;place-items:center;position:relative;
+      background:conic-gradient(#ff6f9f calc(var(--score)*1%),#f3e5ec 0)
+    }
+    .ring:before{content:"";position:absolute;inset:12px;border-radius:50%;background:#fff}
+    .ring strong{position:relative;font-size:34px;letter-spacing:-.04em}
+    .score-box h3{font-size:24px;margin:0 0 7px}
+    .score-box p{font-size:14px;margin:0}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+    .mini b{font-size:13px}
+    .value{font-size:31px;font-weight:900;margin:5px 0}
+    .mini p{font-size:12px;margin:0}
+    .section-title{font-size:22px;font-weight:900;letter-spacing:-.03em;margin:25px 0 11px}
+    .list{display:grid;gap:10px}
+    .item,.cat{background:#fff;border:1px solid #efdee7;border-radius:17px;padding:15px}
+    .item h4{margin:0 0 6px;font-size:16px;line-height:1.35}
+    .item p{font-size:13px;margin:0}
+    .tag{display:inline-block;margin-top:10px;padding:8px 10px;border-radius:11px;background:#eefaf5;color:#27ad76;font-size:12px;font-weight:900}
+    .tag.warn{background:#fff3e8;color:#df8b26}
+    .tag.bad{background:#fff0f3;color:#df5871}
+    .cat-head{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:900;margin-bottom:8px}
+    .bar{height:9px;background:#f3e6ec;border-radius:999px;overflow:hidden}
+    .bar span{display:block;height:100%;background:linear-gradient(90deg,#ff6f9f,#9578ff)}
+    .actions{display:grid;gap:10px;margin-top:22px}
+    .notice{margin-top:17px;background:#fff8e7;border-radius:15px;padding:13px;color:#76571c;font-size:13px;line-height:1.5}
+    .toast{
+      display:none;position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));
+      transform:translateX(-50%);max-width:90vw;text-align:center;
+      color:#fff;background:#302631;padding:12px 15px;border-radius:13px;font-size:14px;font-weight:850
+    }
+    @media(min-width:650px){
+      .card{padding:28px 24px}
+      .score-box{display:flex;align-items:center;text-align:left;gap:22px}
+      .ring{margin:0;flex:0 0 142px}
+      .actions{grid-template-columns:repeat(3,1fr)}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">♡</div>
+      <div>Для Элинусницы<small>короткий тест от Зура</small></div>
+    </div>
+    <button class="ghost" type="button" onclick="resetTest()">Сначала</button>
+  </header>
+
+  <section class="screen active" id="welcome">
+    <div class="card">
+      <div class="eyebrow">18 коротких вопросов</div>
+      <h1>Элинусница, насколько мы с тобой совпадаем? 💗</h1>
+      <p>Зур уже ответил. Теперь твоя очередь. Отвечай честно — правильных и неправильных ответов здесь нет.</p>
+      <div class="chips">
+        <div class="chip">💬 Общение</div><div class="chip">🤝 Доверие</div>
+        <div class="chip">❤️ Близость</div><div class="chip">💳 Деньги</div><div class="chip">🚀 Будущее</div>
+      </div>
+      <div class="info"><b>Как это работает:</b> выбирай один из пяти вариантов. В конце появятся процент совпадения, сильные стороны и темы для разговора.</div>
+      <button class="btn start" type="button" onclick="startTest()">Начать тест</button>
+    </div>
+  </section>
+
+  <section class="screen" id="quiz">
+    <div class="card">
+      <div class="quiz-head">
+        <div class="eyebrow">Отвечает Элинусница</div>
+        <h2 id="counter">Вопрос 1 из 18</h2>
+        <p>Выбери вариант, который ближе всего к тебе.</p>
+        <div class="badge" id="badge">Общение</div>
+      </div>
+      <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+      <div class="question" id="question"></div>
+      <div class="answers" id="answers"></div>
+      <div class="nav">
+        <button class="ghost" id="backBtn" type="button" onclick="goBack()">Назад</button>
+        <button class="btn" id="nextBtn" type="button" onclick="goNext()" disabled>Дальше</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="results">
+    <div class="card">
+      <div class="result-head">
+        <div class="eyebrow">Ваш результат</div>
+        <h2>Зур + Элинусница</h2>
+        <p>Это не приговор, а подсказка, где вы совпадаете и что лучше обсудить.</p>
+      </div>
+
+      <div class="score-box">
+        <div class="ring" id="ring"><strong id="score">0%</strong></div>
+        <div><h3 id="verdict"></h3><p id="summary"></p></div>
+      </div>
+
+      <div class="mini-grid">
+        <div class="mini"><b>Полных совпадений</b><div class="value" id="exact">0</div><p>Одинаковые ответы.</p></div>
+        <div class="mini"><b>Тем для разговора</b><div class="value" id="talk">0</div><p>Заметные различия.</p></div>
+      </div>
+
+      <div class="section-title">Совпадение по сферам</div>
+      <div class="list" id="categories"></div>
+
+      <div class="section-title">Где вы особенно совпали</div>
+      <div class="list" id="matches"></div>
+
+      <div class="section-title">Что лучше спокойно обсудить</div>
+      <div class="list" id="conflicts"></div>
+
+      <div class="actions">
+        <button class="btn" type="button" onclick="shareResult()">Отправить результат Зуру</button>
+        <button class="ghost" type="button" onclick="copyResult()">Скопировать итог</button>
+        <button class="ghost" type="button" onclick="resetTest()">Пройти заново</button>
+      </div>
+      <div class="notice">На iPhone открывай этот тест именно по ссылке GitHub Pages через Safari. Скачанный файл в приложении «Файлы» запускается как предпросмотр и блокирует кнопки.</div>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var labels=[
+  "Категорически не согласна","Скорее не согласна","Не уверена / зависит",
+  "Скорее согласна","Полностью согласна"
+];
+
+var questions=[
+  {c:"Общение",q:"Мне важно переписываться с Зуром каждый день.",z:5},
+  {c:"Близость",q:"Мне нужно много нежности, объятий и тёплых слов.",z:4},
+  {c:"Время вместе",q:"Я хочу часто проводить свободное время вместе.",z:5},
+  {c:"Свобода",q:"Мне нормально, если у каждого есть отдельные друзья и занятия.",z:5},
+  {c:"Общение",q:"Во время конфликта проблему нужно обсуждать, а не надолго замолкать.",z:4},
+  {c:"Уважение",q:"Оскорбления и мат в адрес партнёра для меня недопустимы.",z:5},
+  {c:"Инициатива",q:"Мне важно самой часто проявлять инициативу в отношениях.",z:3},
+  {c:"Близость",q:"Секс должен быть регулярной и важной частью отношений.",z:5},
+  {c:"Близость",q:"Отказ от секса не означает отсутствие любви.",z:2},
+  {c:"Доверие",q:"Партнёры должны честно рассказывать друг другу о важных вещах.",z:5},
+  {c:"Доверие",q:"Проверять телефон партнёра без разрешения недопустимо.",z:5},
+  {c:"Доверие",q:"Я часто ревную и хочу больше контроля и уверенности.",z:1},
+  {c:"Будущее",q:"Я хочу официальный брак с Зуром.",z:5},
+  {c:"Будущее",q:"Я хочу детей в будущем.",z:3},
+  {c:"Будущее",q:"Мне важно много путешествовать вместе.",z:5},
+  {c:"Деньги",q:"Финансовая стабильность важнее дорогих подарков и красивой картинки.",z:5},
+  {c:"Отношения",q:"Я готова меняться и идти на компромиссы ради отношений.",z:5},
+  {c:"Отношения",q:"При серьёзных проблемах я готова пойти с Зуром к семейному психологу.",z:5}
+];
+
+var icons={
+  "Общение":"💬","Близость":"❤️","Время вместе":"🫶","Свобода":"🧭",
+  "Уважение":"🤍","Инициатива":"✨","Доверие":"🤝","Будущее":"🚀",
+  "Деньги":"💳","Отношения":"💗"
+};
+
+var state={index:0,answers:[]};
+for(var i=0;i<questions.length;i++){state.answers.push(null)}
+
+function el(id){return document.getElementById(id)}
+function show(id){
+  var s=document.querySelectorAll(".screen");
+  for(var i=0;i<s.length;i++){s[i].className="screen"}
+  el(id).className="screen active";
+  window.scrollTo(0,0);
+}
+function startTest(){show("quiz");renderQuestion()}
+function renderQuestion(){
+  var item=questions[state.index];
+  el("counter").textContent="Вопрос "+(state.index+1)+" из "+questions.length;
+  el("badge").textContent=(icons[item.c]||"•")+" "+item.c;
+  el("question").textContent=item.q;
+  el("progress").style.width=(((state.index+1)/questions.length)*100)+"%";
+  var box=el("answers");box.innerHTML="";
+  for(var i=0;i<labels.length;i++){
+    var b=document.createElement("button");
+    b.type="button";
+    b.className="answer"+(state.answers[state.index]===i+1?" selected":"");
+    b.setAttribute("data-value",String(i+1));
+    b.innerHTML="<span>"+labels[i]+"</span><span class='num'>"+(i+1)+"</span>";
+    b.onclick=function(){chooseAnswer(parseInt(this.getAttribute("data-value"),10))};
+    box.appendChild(b);
+  }
+  el("backBtn").disabled=state.index===0;
+  el("nextBtn").disabled=!state.answers[state.index];
+  el("nextBtn").textContent=state.index===questions.length-1?"Узнать результат":"Дальше";
+}
+function chooseAnswer(value){state.answers[state.index]=value;renderQuestion()}
+function goBack(){if(state.index>0){state.index--;renderQuestion()}}
+function goNext(){
+  if(!state.answers[state.index])return;
+  if(state.index<questions.length-1){state.index++;renderQuestion()}
+  else{renderResults();show("results")}
+}
+function calculate(){
+  var items=[],sum=0,cats={};
+  for(var i=0;i<questions.length;i++){
+    var q=questions[i],e=state.answers[i],diff=Math.abs(q.z-e),score=Math.max(0,100-diff*25);
+    var x={c:q.c,q:q.q,z:q.z,e:e,diff:diff,score:score};
+    items.push(x);sum+=score;
+    if(!cats[q.c])cats[q.c]=[];
+    cats[q.c].push(score);
+  }
+  var catScores={};
+  for(var k in cats){
+    var arr=cats[k],s=0;
+    for(var j=0;j<arr.length;j++)s+=arr[j];
+    catScores[k]=Math.round(s/arr.length);
+  }
+  return{overall:Math.round(sum/questions.length),items:items,categories:catScores}
+}
+function getVerdict(score){
+  if(score>=88)return["Очень сильное совпадение","Вы во многом смотрите на отношения похоже. Главное — продолжать говорить друг с другом честно."];
+  if(score>=76)return["Хорошая совместимость","У вас много общего, а различия выглядят обсуждаемыми."];
+  if(score>=64)return["Совместимость выше средней","Основа хорошая, но в нескольких темах вы ждёте от отношений разного."];
+  if(score>=50)return["Есть заметные различия","Вы совпадаете не во всём. Некоторые ожидания придётся проговорить прямо."];
+  return["Много важных расхождений","Ответы заметно отличаются. Без честного разговора одни и те же проблемы будут повторяться."];
+}
+function renderResults(){
+  var r=calculate(),v=getVerdict(r.overall),exact=0,talk=[];
+  el("score").textContent=r.overall+"%";
+  el("ring").style.setProperty("--score",r.overall);
+  el("verdict").textContent=v[0];el("summary").textContent=v[1];
+  for(var i=0;i<r.items.length;i++){
+    if(r.items[i].diff===0)exact++;
+    if(r.items[i].diff>=2)talk.push(r.items[i]);
+  }
+  talk.sort(function(a,b){return b.diff-a.diff});
+  el("exact").textContent=exact;el("talk").textContent=talk.length;
+
+  var entries=[];
+  for(var k in r.categories)entries.push([k,r.categories[k]]);
+  entries.sort(function(a,b){return b[1]-a[1]});
+  var cats=el("categories");cats.innerHTML="";
+  for(var c=0;c<entries.length;c++){
+    var d=document.createElement("div");d.className="cat";
+    d.innerHTML="<div class='cat-head'><span>"+(icons[entries[c][0]]||"•")+" "+entries[c][0]+"</span><span>"+entries[c][1]+"%</span></div><div class='bar'><span style='width:"+entries[c][1]+"%'></span></div>";
+    cats.appendChild(d);
+  }
+
+  var best=r.items.slice();
+  best.sort(function(a,b){return a.diff-b.diff});
+  best=best.slice(0,6);
+  var matches=el("matches");matches.innerHTML="";
+  for(var m=0;m<best.length;m++){
+    var x=best[m],row=document.createElement("div");row.className="item";
+    row.innerHTML="<h4>"+x.q+"</h4><p>Зур: «"+labels[x.z-1]+"» · Элинусница: «"+labels[x.e-1]+"»</p><div class='tag'>"+(x.diff===0?"Полное совпадение":"Почти совпали")+"</div>";
+    matches.appendChild(row);
+  }
+
+  var conflicts=el("conflicts");conflicts.innerHTML="";
+  if(!talk.length){
+    var ok=document.createElement("div");ok.className="item";
+    ok.innerHTML="<h4>Крупных расхождений нет</h4><p>Вы не выбрали сильно противоположные варианты ни в одном вопросе.</p><div class='tag'>Хороший знак</div>";
+    conflicts.appendChild(ok);
+  }else{
+    for(var t=0;t<Math.min(8,talk.length);t++){
+      var y=talk[t],r2=document.createElement("div");r2.className="item";
+      r2.innerHTML="<h4>"+y.q+"</h4><p>Зур: «"+labels[y.z-1]+"» · Элинусница: «"+labels[y.e-1]+"»</p><div class='tag "+(y.diff>=3?"bad":"warn")+"'>"+(y.diff>=3?"Сильное различие":"Стоит обсудить")+"</div>";
+      conflicts.appendChild(r2);
+    }
+  }
+}
+function resultText(){
+  var r=calculate(),v=getVerdict(r.overall),talk=[],exact=0,cats=[];
+  for(var i=0;i<r.items.length;i++){
+    if(r.items[i].diff===0)exact++;
+    if(r.items[i].diff>=2)talk.push(r.items[i]);
+  }
+  talk.sort(function(a,b){return b.diff-a.diff});
+  for(var k in r.categories)cats.push(k+": "+r.categories[k]+"%");
+  var conflicts="Крупных расхождений нет.";
+  if(talk.length){
+    var lines=[];
+    for(var j=0;j<Math.min(5,talk.length);j++){
+      lines.push((j+1)+". "+talk[j].q+"\nЗур: "+labels[talk[j].z-1]+"\nЭлинусница: "+labels[talk[j].e-1]);
+    }
+    conflicts=lines.join("\n\n");
+  }
+  return"Зур + Элинусница 💗\nСовместимость: "+r.overall+"% — "+v[0]+"\nПолных совпадений: "+exact+"\n\nСовпадение по сферам:\n"+cats.join("\n")+"\n\nГлавные темы для разговора:\n"+conflicts;
+}
+function showToast(text){
+  var t=el("toast");t.textContent=text;t.style.display="block";
+  setTimeout(function(){t.style.display="none"},1800);
+}
+function copyText(text){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){showToast("Итог скопирован")},function(){fallbackCopy(text)});
+  }else{fallbackCopy(text)}
+}
+function fallbackCopy(text){
+  var a=document.createElement("textarea");a.value=text;a.style.position="fixed";a.style.left="-9999px";
+  document.body.appendChild(a);a.focus();a.select();
+  try{document.execCommand("copy");showToast("Итог скопирован")}catch(e){showToast("Не удалось скопировать")}
+  document.body.removeChild(a);
+}
+function copyResult(){copyText(resultText())}
+function shareResult(){
+  var text=resultText();
+  if(navigator.share){
+    navigator.share({title:"Наш результат совместимости",text:text}).catch(function(){copyText(text)});
+  }else{copyText(text)}
+}
+function resetTest(){
+  if(confirm("Удалить ответы и пройти тест заново?")){
+    state={index:0,answers:[]};
+    for(var i=0;i<questions.length;i++)state.answers.push(null);
+    show("welcome");
+  }
+}
+</script>
+</body>
+</html>
